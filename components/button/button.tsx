@@ -2,21 +2,27 @@
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
 import classNames from 'classnames';
+// react新版删除生命周期的polyfill
 import { polyfill } from 'react-lifecycles-compat';
+// 忽略数组中的key
 import omit from 'omit.js';
 import Group from './button-group';
 import Icon from '../icon';
+
 import { ConfigConsumer, ConfigConsumerProps } from '../config-provider';
+
 import Wave from '../_util/wave';
 import { Omit, tuple } from '../_util/type';
 
+// 两个中文char的正则与函数
 const rxTwoCNChar = /^[\u4e00-\u9fa5]{2}$/;
 const isTwoCNChar = rxTwoCNChar.test.bind(rxTwoCNChar);
+// 是否未字符串函数
 function isString(str: any) {
   return typeof str === 'string';
 }
 
-// Insert one space between two chinese characters automatically.
+// 插入空格往二个中文str里
 function insertSpace(child: React.ReactChild, needInserted: boolean) {
   // Check the child if is undefined or null.
   if (child == null) {
@@ -41,6 +47,7 @@ function insertSpace(child: React.ReactChild, needInserted: boolean) {
   return child;
 }
 
+// 遍历出多子元素插入space
 function spaceChildren(children: React.ReactNode, needInserted: boolean) {
   let isPrevChildPure: boolean = false;
   const childList: React.ReactNode[] = [];
@@ -64,6 +71,7 @@ function spaceChildren(children: React.ReactNode, needInserted: boolean) {
   );
 }
 
+// 转换成数组
 const ButtonTypes = tuple('default', 'primary', 'ghost', 'dashed', 'danger', 'link');
 export type ButtonType = (typeof ButtonTypes)[number];
 const ButtonShapes = tuple('circle', 'circle-outline', 'round');
@@ -174,6 +182,7 @@ class Button extends React.Component<ButtonProps, ButtonState> {
     }
   }
 
+  // renderButton时绑定button ref
   saveButtonRef = (node: HTMLElement | null) => {
     this.buttonNode = node;
   };
@@ -208,6 +217,7 @@ class Button extends React.Component<ButtonProps, ButtonState> {
     }
   }
 
+  // 判断插入空格条件
   isNeedInserted() {
     const { icon, children, type } = this.props;
     return React.Children.count(children) === 1 && !icon && type !== 'link';
