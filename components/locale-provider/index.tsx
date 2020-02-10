@@ -1,7 +1,9 @@
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
 import * as moment from 'moment';
+// 返回原值或者.default
 import interopDefault from '../_util/interopDefault';
+// 改变modalLocale中的runtimeLocale,以传入值覆盖defaultLocale.Modal,
 import { ModalLocale, changeConfirmLocale } from '../modal/locale';
 import warning from '../_util/warning';
 
@@ -27,6 +29,7 @@ export interface LocaleProviderProps {
   _ANT_MARK__?: string;
 }
 
+// 设置moment.locale();
 function setMomentLocale(locale: Locale) {
   if (locale && locale.locale) {
     interopDefault(moment).locale(locale.locale);

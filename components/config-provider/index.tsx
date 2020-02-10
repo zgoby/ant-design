@@ -2,10 +2,13 @@
 // SFC has specified a displayName, but not worked.
 /* eslint-disable react/display-name */
 import * as React from 'react';
-
+// 统一分类返回为空的组件
 import { RenderEmptyHandler } from './renderEmpty';
+// 一个更新更新monentLocale和locale.modal的包装组件
 import LocaleProvider, { Locale, ANT_MARK } from '../locale-provider';
+// 以函数形式传递locale信息的组件
 import LocaleReceiver from '../locale-provider/LocaleReceiver';
+// ConfigContext的Provider和Consumer
 import { ConfigConsumer, ConfigContext, CSPConfig, ConfigConsumerProps } from './context';
 
 export { RenderEmptyHandler, ConfigConsumer, CSPConfig, ConfigConsumerProps };
@@ -35,6 +38,7 @@ export interface ConfigProviderProps {
 }
 
 class ConfigProvider extends React.Component<ConfigProviderProps> {
+  // 定义全局的getPerfixCls,以customize优先
   getPrefixCls = (suffixCls: string, customizePrefixCls?: string) => {
     const { prefixCls = 'ant' } = this.props;
 
