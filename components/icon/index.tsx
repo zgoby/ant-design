@@ -1,18 +1,24 @@
 /* eslint-disable camelcase */
 import * as React from 'react';
 import classNames from 'classnames';
+// 固有icon合集
 import * as allIcons from '@ant-design/icons/lib/dist';
 import ReactIcon from '@ant-design/icons-react';
+// 方便开发者调用在 iconfont.cn 上自行管理的图标
 import createFromIconfontCN from './IconFont';
 import {
   svgBaseProps,
+// 处理themeType
   withThemeSuffix,
+// 用''替换加上去的theme
   removeTypeTheme,
+// 从type得到themeType
   getThemeFromTypeName,
   alias,
 } from './utils';
 import warning from '../_util/warning';
 import LocaleReceiver from '../locale-provider/LocaleReceiver';
+// 双色
 import { getTwoToneColor, setTwoToneColor } from './twoTonePrimaryColor';
 
 // Initial setting
