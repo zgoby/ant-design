@@ -2,6 +2,7 @@ import * as React from 'react';
 import classNames from 'classnames';
 import { ConfigConsumer, ConfigConsumerProps } from '../config-provider';
 import warning from '../_util/warning';
+// 处理ref的createRef形式和函数形式
 import { composeRef } from '../_util/ref';
 
 export interface TypographyProps {
@@ -33,6 +34,7 @@ const Typography: React.RefForwardingComponent<{}, InternalTypographyProps> = (
 ) => {
   let mergedRef = ref;
 
+  // 数组函数形式的,兼容处理
   if (setContentRef) {
     warning(false, 'Typography', '`setContentRef` is deprecated. Please use `ref` instead.');
     mergedRef = composeRef(ref, setContentRef);
@@ -61,6 +63,7 @@ const Typography: React.RefForwardingComponent<{}, InternalTypographyProps> = (
 
 let RefTypography;
 
+// 转发ref,提上dispalyName
 if (React.forwardRef) {
   RefTypography = React.forwardRef(Typography);
   RefTypography.displayName = 'Typography';
