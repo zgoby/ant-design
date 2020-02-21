@@ -1,22 +1,31 @@
 import * as React from 'react';
 import classNames from 'classnames';
+// 生命周期polyfill
 import { polyfill } from 'react-lifecycles-compat';
+// React的children转换为数据类型
 import toArray from 'rc-util/lib/Children/toArray';
 import findDOMNode from 'rc-util/lib/Dom/findDOMNode';
+// copy剪切板
 import copy from 'copy-to-clipboard';
+// 数组排除项
 import omit from 'omit.js';
+// onResize处理包裹
 import ResizeObserver from 'rc-resize-observer';
 import { ConfigConsumerProps, configConsumerProps } from '../config-provider';
 import { withConfigConsumer } from '../config-provider/context';
 import LocaleReceiver from '../locale-provider/LocaleReceiver';
 import warning from '../_util/warning';
+// 行内div,处理keyDown,keyUp
 import TransButton from '../_util/transButton';
+// requestAnimationFrame polyfill
 import raf from '../_util/raf';
+// 校验是否支持该style
 import isStyleSupport from '../_util/styleChecker';
 import Icon from '../icon';
 import Tooltip from '../tooltip';
 import Typography, { TypographyProps } from './Typography';
 import Editable from './Editable';
+// 鼠标悬停...的提示render
 import measure from './util';
 
 export type BaseType = 'secondary' | 'danger' | 'warning';

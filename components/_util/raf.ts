@@ -1,3 +1,4 @@
+// requestAnimationFrame polyfill
 import raf from 'raf';
 
 interface RafMap {
