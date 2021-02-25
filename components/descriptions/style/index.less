@@ -3,21 +3,28 @@
 
 @descriptions-prefix-cls: ~'@{ant-prefix}-descriptions';
 
-@descriptions-default-padding: 16px 24px;
-@descriptions-middle-padding: 12px 24px;
-@descriptions-small-padding: 8px 16px;
-
 .@{descriptions-prefix-cls} {
-  &-rtl {
-    direction: rtl;
+  &-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: @descriptions-title-margin-bottom;
   }
 
   &-title {
-    margin-bottom: 20px;
+    flex: auto;
+    overflow: hidden;
     color: @heading-color;
     font-weight: bold;
     font-size: @font-size-lg;
     line-height: @line-height-base;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  &-extra {
+    margin-left: auto;
+    color: @descriptions-extra-color;
+    font-size: @font-size-base;
   }
 
   &-view {
@@ -33,7 +40,7 @@
   &-row {
     > th,
     > td {
-      padding-bottom: 16px;
+      padding-bottom: @descriptions-item-padding-bottom;
     }
     &:last-child {
       border-bottom: none;
@@ -45,23 +52,24 @@
     font-weight: normal;
     font-size: @font-size-base;
     line-height: @line-height-base;
-    white-space: nowrap;
+    text-align: start;
 
     &::after {
+      & when (@descriptions-item-trailing-colon=true) {
+        content: ':';
+      }
+      & when not (@descriptions-item-trailing-colon=true) {
+        content: ' ';
+      }
+
       position: relative;
       top: -0.5px;
-      margin: 0 8px 0 2px;
-      content: ' ';
-
-      .@{descriptions-prefix-cls}-rtl & {
-        margin: 0 2px 0 8px;
-      }
+      margin: 0 @descriptions-item-label-colon-margin-right 0
+        @descriptions-item-label-colon-margin-left;
     }
-  }
 
-  &-item-colon {
-    &::after {
-      content: ':';
+    &.@{descriptions-prefix-cls}-item-no-colon::after {
+      content: ' ';
     }
   }
 
@@ -74,15 +82,26 @@
 
   &-item-content {
     display: table-cell;
+    flex: 1;
     color: @text-color;
     font-size: @font-size-base;
     line-height: @line-height-base;
+    word-break: break-word;
+    overflow-wrap: break-word;
   }
 
   &-item {
     padding-bottom: 0;
-    > span {
-      display: inline-block;
+    vertical-align: top;
+
+    &-container {
+      display: flex;
+
+      .@{descriptions-prefix-cls}-item-label,
+      .@{descriptions-prefix-cls}-item-content {
+        display: inline-flex;
+        align-items: baseline;
+      }
     }
   }
 
@@ -90,7 +109,7 @@
     .@{descriptions-prefix-cls}-row {
       > th,
       > td {
-        padding-bottom: 12px;
+        padding-bottom: @padding-sm;
       }
     }
   }
@@ -99,7 +118,7 @@
     .@{descriptions-prefix-cls}-row {
       > th,
       > td {
-        padding-bottom: 8px;
+        padding-bottom: @padding-xs;
       }
     }
   }
@@ -151,3 +170,5 @@
     }
   }
 }
+
+@import './rtl';

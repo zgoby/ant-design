@@ -29,7 +29,7 @@ const CommentList = ({ comments }) => (
 );
 
 const Editor = ({ onChange, onSubmit, submitting, value }) => (
-  <div>
+  <>
     <Form.Item>
       <TextArea rows={4} onChange={onChange} value={value} />
     </Form.Item>
@@ -38,7 +38,7 @@ const Editor = ({ onChange, onSubmit, submitting, value }) => (
         Add Comment
       </Button>
     </Form.Item>
-  </div>
+  </>
 );
 
 class App extends React.Component {
@@ -62,13 +62,13 @@ class App extends React.Component {
         submitting: false,
         value: '',
         comments: [
+          ...this.state.comments,
           {
             author: 'Han Solo',
             avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
             content: <p>{this.state.value}</p>,
             datetime: moment().fromNow(),
           },
-          ...this.state.comments,
         ],
       });
     }, 1000);
@@ -84,7 +84,7 @@ class App extends React.Component {
     const { comments, submitting, value } = this.state;
 
     return (
-      <div>
+      <>
         {comments.length > 0 && <CommentList comments={comments} />}
         <Comment
           avatar={
@@ -102,7 +102,7 @@ class App extends React.Component {
             />
           }
         />
-      </div>
+      </>
     );
   }
 }

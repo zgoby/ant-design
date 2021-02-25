@@ -20,7 +20,7 @@ import { Typography } from 'antd';
 const { Title, Paragraph, Text } = Typography;
 
 ReactDOM.render(
-  <div>
+  <>
     <Title>Introduction</Title>
     <Paragraph>
       In the process of internal desktop applications development, many different design specs and
@@ -86,7 +86,31 @@ ReactDOM.render(
         </li>
       </ul>
     </Paragraph>
-  </div>,
+
+    <Paragraph>
+      <ul>
+        <li>I am an unordered item</li>
+        <li>
+          I am an unordered item with an ordered sublist
+          <ol>
+            <li>I am ordered</li>
+          </ol>
+          <ul>
+            <li>I am unordered</li>
+          </ul>
+        </li>
+      </ul>
+      <ol>
+        <li>
+          Ordered list item with unordered sublist
+          <ul>
+            <li>I am unordered!</li>
+            <li>I am also unordered!</li>
+          </ul>
+        </li>
+      </ol>
+    </Paragraph>
+  </>,
   mountNode,
 );
 ```

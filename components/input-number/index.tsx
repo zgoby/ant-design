@@ -1,9 +1,10 @@
 import * as React from 'react';
 import classNames from 'classnames';
 import RcInputNumber from 'rc-input-number';
-import { UpOutlined, DownOutlined } from '@ant-design/icons';
+import UpOutlined from '@ant-design/icons/UpOutlined';
+import DownOutlined from '@ant-design/icons/DownOutlined';
 
-import { ConfigConsumer, ConfigConsumerProps } from '../config-provider';
+import { ConfigContext } from '../config-provider';
 import { Omit } from '../_util/type';
 import SizeContext, { SizeType } from '../config-provider/SizeContext';
 
@@ -19,9 +20,11 @@ export interface InputNumberProps
   step?: number | string;
   defaultValue?: number;
   tabIndex?: number;
-  onChange?: (value: number | undefined) => void;
+  onChange?: (value: number | string | undefined | null) => void;
   disabled?: boolean;
+  readOnly?: boolean;
   size?: SizeType;
+  bordered?: boolean;
   formatter?: (value: number | string | undefined) => string;
   parser?: (displayValue: string | undefined) => number | string;
   decimalSeparator?: string;
@@ -32,61 +35,53 @@ export interface InputNumberProps
   id?: string;
   precision?: number;
   onPressEnter?: React.KeyboardEventHandler<HTMLInputElement>;
+  onStep?: (value: number, info: { offset: number; type: 'up' | 'down' }) => void;
 }
 
-export default class InputNumber extends React.Component<InputNumberProps, any> {
-  static defaultProps = {
-    step: 1,
-  };
+const InputNumber = React.forwardRef<unknown, InputNumberProps>((props, ref) => {
+  const { getPrefixCls, direction } = React.useContext(ConfigContext);
+  const size = React.useContext(SizeContext);
 
-  private inputNumberRef: any;
+  const {
+    className,
+    size: customizeSize,
+    prefixCls: customizePrefixCls,
+    bordered = true,
+    readOnly,
+    ...others
+  } = props;
 
-  saveInputNumber = (inputNumberRef: any) => {
-    this.inputNumberRef = inputNumberRef;
-  };
+  const prefixCls = getPrefixCls('input-number', customizePrefixCls);
+  const upIcon = <UpOutlined className={`${prefixCls}-handler-up-inner`} />;
+  const downIcon = <DownOutlined className={`${prefixCls}-handler-down-inner`} />;
 
-  focus() {
-    this.inputNumberRef.focus();
-  }
+  const mergeSize = customizeSize || size;
+  const inputNumberClass = classNames(
+    {
+      [`${prefixCls}-lg`]: mergeSize === 'large',
+      [`${prefixCls}-sm`]: mergeSize === 'small',
+      [`${prefixCls}-rtl`]: direction === 'rtl',
+      [`${prefixCls}-readonly`]: readOnly,
+      [`${prefixCls}-borderless`]: !bordered,
+    },
+    className,
+  );
 
-  blur() {
-    this.inputNumberRef.blur();
-  }
+  return (
+    <RcInputNumber
+      ref={ref}
+      className={inputNumberClass}
+      upHandler={upIcon}
+      downHandler={downIcon}
+      prefixCls={prefixCls}
+      readOnly={readOnly}
+      {...others}
+    />
+  );
+});
 
-  renderInputNumber = ({ getPrefixCls }: ConfigConsumerProps) => {
-    const { className, size: customizeSize, prefixCls: customizePrefixCls, ...others } = this.props;
-    const prefixCls = getPrefixCls('input-number', customizePrefixCls);
-    const upIcon = <UpOutlined className={`${prefixCls}-handler-up-inner`} />;
-    const downIcon = <DownOutlined className={`${prefixCls}-handler-down-inner`} />;
+InputNumber.defaultProps = {
+  step: 1,
+};
 
-    return (
-      <SizeContext.Consumer>
-        {size => {
-          const mergeSize = customizeSize || size;
-          const inputNumberClass = classNames(
-            {
-              [`${prefixCls}-lg`]: mergeSize === 'large',
-              [`${prefixCls}-sm`]: mergeSize === 'small',
-            },
-            className,
-          );
-
-          return (
-            <RcInputNumber
-              ref={this.saveInputNumber}
-              className={inputNumberClass}
-              upHandler={upIcon}
-              downHandler={downIcon}
-              prefixCls={prefixCls}
-              {...others}
-            />
-          );
-        }}
-      </SizeContext.Consumer>
-    );
-  };
-
-  render() {
-    return <ConfigConsumer>{this.renderInputNumber}</ConfigConsumer>;
-  }
-}
+export default InputNumber;

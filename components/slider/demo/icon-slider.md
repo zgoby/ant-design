@@ -56,13 +56,13 @@ ReactDOM.render(<IconSlider min={0} max={20} />, mountNode);
   top: -2px;
   width: 16px;
   height: 16px;
-  line-height: 1;
-  font-size: 16px;
   color: rgba(0, 0, 0, 0.25);
+  font-size: 16px;
+  line-height: 1;
 }
 
 .icon-wrapper .icon-wrapper-active {
-  color: rgba(0, 0, 0, .45);
+  color: rgba(0, 0, 0, 0.45);
 }
 
 .icon-wrapper .anticon:first-child {

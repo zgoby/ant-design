@@ -67,11 +67,11 @@ exports[`renders ./components/empty/demo/basic.md correctly 1`] = `
       </g>
     </svg>
   </div>
-  <p
+  <div
     class="ant-empty-description"
   >
     No Data
-  </p>
+  </div>
 </div>
 `;
 
@@ -83,6 +83,9 @@ exports[`renders ./components/empty/demo/config-provider.md correctly 1`] = `
     role="switch"
     type="button"
   >
+    <div
+      class="ant-switch-handle"
+    />
     <span
       class="ant-switch-inner"
     >
@@ -96,9 +99,9 @@ exports[`renders ./components/empty/demo/config-provider.md correctly 1`] = `
   <div
     class="config-provider"
   >
-    <h3>
+    <h4>
       Select
-    </h3>
+    </h4>
     <div
       class="ant-select ant-select-single ant-select-show-arrow"
       style="width:200px"
@@ -120,6 +123,8 @@ exports[`renders ./components/empty/demo/config-provider.md correctly 1`] = `
             readonly=""
             role="combobox"
             style="opacity:0"
+            type="search"
+            unselectable="on"
             value=""
           />
         </span>
@@ -135,12 +140,11 @@ exports[`renders ./components/empty/demo/config-provider.md correctly 1`] = `
       >
         <span
           aria-label="down"
-          class="anticon anticon-down"
+          class="anticon anticon-down ant-select-suffix"
           role="img"
         >
           <svg
             aria-hidden="true"
-            class=""
             data-icon="down"
             fill="currentColor"
             focusable="false"
@@ -155,9 +159,9 @@ exports[`renders ./components/empty/demo/config-provider.md correctly 1`] = `
         </span>
       </span>
     </div>
-    <h3>
+    <h4>
       TreeSelect
-    </h3>
+    </h4>
     <div
       class="ant-select ant-tree-select ant-select-single ant-select-show-arrow"
       style="width:200px"
@@ -179,6 +183,8 @@ exports[`renders ./components/empty/demo/config-provider.md correctly 1`] = `
             readonly=""
             role="combobox"
             style="opacity:0"
+            type="search"
+            unselectable="on"
             value=""
           />
         </span>
@@ -194,12 +200,11 @@ exports[`renders ./components/empty/demo/config-provider.md correctly 1`] = `
       >
         <span
           aria-label="down"
-          class="anticon anticon-down"
+          class="anticon anticon-down ant-select-suffix"
           role="img"
         >
           <svg
             aria-hidden="true"
-            class=""
             data-icon="down"
             fill="currentColor"
             focusable="false"
@@ -214,9 +219,9 @@ exports[`renders ./components/empty/demo/config-provider.md correctly 1`] = `
         </span>
       </span>
     </div>
-    <h3>
+    <h4>
       Cascader
-    </h3>
+    </h4>
     <span
       class="ant-cascader-picker ant-cascader-picker-show-search"
       style="width:200px"
@@ -240,7 +245,6 @@ exports[`renders ./components/empty/demo/config-provider.md correctly 1`] = `
       >
         <svg
           aria-hidden="true"
-          class=""
           data-icon="down"
           fill="currentColor"
           focusable="false"
@@ -254,9 +258,9 @@ exports[`renders ./components/empty/demo/config-provider.md correctly 1`] = `
         </svg>
       </span>
     </span>
-    <h3>
+    <h4>
       Transfer
-    </h3>
+    </h4>
     <div
       class="ant-transfer"
     >
@@ -282,15 +286,32 @@ exports[`renders ./components/empty/demo/config-provider.md correctly 1`] = `
             </span>
           </label>
           <span
+            aria-label="down"
+            class="anticon anticon-down ant-dropdown-trigger ant-transfer-list-header-dropdown"
+            role="img"
+          >
+            <svg
+              aria-hidden="true"
+              data-icon="down"
+              fill="currentColor"
+              focusable="false"
+              height="1em"
+              viewBox="64 64 896 896"
+              width="1em"
+            >
+              <path
+                d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
+              />
+            </svg>
+          </span>
+          <span
             class="ant-transfer-list-header-selected"
           >
-            <span>
-              0 item
-            </span>
-            <span
-              class="ant-transfer-list-header-title"
-            />
+            0 item
           </span>
+          <span
+            class="ant-transfer-list-header-title"
+          />
         </div>
         <div
           class="ant-transfer-list-body"
@@ -338,11 +359,11 @@ exports[`renders ./components/empty/demo/config-provider.md correctly 1`] = `
                   </g>
                 </svg>
               </div>
-              <p
+              <div
                 class="ant-empty-description"
               >
                 No Data
-              </p>
+              </div>
             </div>
           </div>
         </div>
@@ -362,7 +383,6 @@ exports[`renders ./components/empty/demo/config-provider.md correctly 1`] = `
           >
             <svg
               aria-hidden="true"
-              class=""
               data-icon="right"
               fill="currentColor"
               focusable="false"
@@ -388,7 +408,6 @@ exports[`renders ./components/empty/demo/config-provider.md correctly 1`] = `
           >
             <svg
               aria-hidden="true"
-              class=""
               data-icon="left"
               fill="currentColor"
               focusable="false"
@@ -425,15 +444,32 @@ exports[`renders ./components/empty/demo/config-provider.md correctly 1`] = `
             </span>
           </label>
           <span
+            aria-label="down"
+            class="anticon anticon-down ant-dropdown-trigger ant-transfer-list-header-dropdown"
+            role="img"
+          >
+            <svg
+              aria-hidden="true"
+              data-icon="down"
+              fill="currentColor"
+              focusable="false"
+              height="1em"
+              viewBox="64 64 896 896"
+              width="1em"
+            >
+              <path
+                d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
+              />
+            </svg>
+          </span>
+          <span
             class="ant-transfer-list-header-selected"
           >
-            <span>
-              0 item
-            </span>
-            <span
-              class="ant-transfer-list-header-title"
-            />
+            0 item
           </span>
+          <span
+            class="ant-transfer-list-header-title"
+          />
         </div>
         <div
           class="ant-transfer-list-body"
@@ -481,21 +517,22 @@ exports[`renders ./components/empty/demo/config-provider.md correctly 1`] = `
                   </g>
                 </svg>
               </div>
-              <p
+              <div
                 class="ant-empty-description"
               >
                 No Data
-              </p>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <h3>
+    <h4>
       Table
-    </h3>
+    </h4>
     <div
       class="ant-table-wrapper"
+      style="margin-top:8px"
     >
       <div
         class="ant-spin-nested-loading"
@@ -504,8 +541,7 @@ exports[`renders ./components/empty/demo/config-provider.md correctly 1`] = `
           class="ant-spin-container"
         >
           <div
-            class="ant-table"
-            style="margin-top:8px"
+            class="ant-table ant-table-empty"
           >
             <div
               class="ant-table-container"
@@ -516,11 +552,10 @@ exports[`renders ./components/empty/demo/config-provider.md correctly 1`] = `
                 <table
                   style="table-layout:auto"
                 >
-                  <colgroup>
-                    <col />
-                    <col />
-                  </colgroup>
-                  <thead>
+                  <colgroup />
+                  <thead
+                    class="ant-table-thead"
+                  >
                     <tr>
                       <th
                         class="ant-table-cell"
@@ -584,11 +619,11 @@ exports[`renders ./components/empty/demo/config-provider.md correctly 1`] = `
                               </g>
                             </svg>
                           </div>
-                          <p
+                          <div
                             class="ant-empty-description"
                           >
                             No Data
-                          </p>
+                          </div>
                         </div>
                       </td>
                     </tr>
@@ -597,86 +632,12 @@ exports[`renders ./components/empty/demo/config-provider.md correctly 1`] = `
               </div>
             </div>
           </div>
-          <ul
-            class="ant-pagination ant-table-pagination"
-            unselectable="unselectable"
-          >
-            <li
-              aria-disabled="true"
-              class="ant-pagination-disabled ant-pagination-prev"
-              title="Previous Page"
-            >
-              <a
-                class="ant-pagination-item-link"
-              >
-                <span
-                  aria-label="left"
-                  class="anticon anticon-left"
-                  role="img"
-                >
-                  <svg
-                    aria-hidden="true"
-                    class=""
-                    data-icon="left"
-                    fill="currentColor"
-                    focusable="false"
-                    height="1em"
-                    viewBox="64 64 896 896"
-                    width="1em"
-                  >
-                    <path
-                      d="M724 218.3V141c0-6.7-7.7-10.4-12.9-6.3L260.3 486.8a31.86 31.86 0 000 50.3l450.8 352.1c5.3 4.1 12.9.4 12.9-6.3v-77.3c0-4.9-2.3-9.6-6.1-12.6l-360-281 360-281.1c3.8-3 6.1-7.7 6.1-12.6z"
-                    />
-                  </svg>
-                </span>
-              </a>
-            </li>
-            <li
-              class="ant-pagination-item ant-pagination-item-0 ant-pagination-disabled ant-pagination-item-disabled"
-              tabindex="0"
-              title="0"
-            >
-              <a>
-                0
-              </a>
-            </li>
-            <li
-              aria-disabled="true"
-              class="ant-pagination-disabled ant-pagination-next"
-              title="Next Page"
-            >
-              <a
-                class="ant-pagination-item-link"
-              >
-                <span
-                  aria-label="right"
-                  class="anticon anticon-right"
-                  role="img"
-                >
-                  <svg
-                    aria-hidden="true"
-                    class=""
-                    data-icon="right"
-                    fill="currentColor"
-                    focusable="false"
-                    height="1em"
-                    viewBox="64 64 896 896"
-                    width="1em"
-                  >
-                    <path
-                      d="M765.7 486.8L314.9 134.7A7.97 7.97 0 00302 141v77.3c0 4.9 2.3 9.6 6.1 12.6l360 281.1-360 281.1c-3.9 3-6.1 7.7-6.1 12.6V883c0 6.7 7.7 10.4 12.9 6.3l450.8-352.1a31.96 31.96 0 000-50.4z"
-                    />
-                  </svg>
-                </span>
-              </a>
-            </li>
-          </ul>
         </div>
       </div>
     </div>
-    <h3>
+    <h4>
       List
-    </h3>
+    </h4>
     <div
       class="ant-list ant-list-split"
     >
@@ -729,11 +690,11 @@ exports[`renders ./components/empty/demo/config-provider.md correctly 1`] = `
                   </g>
                 </svg>
               </div>
-              <p
+              <div
                 class="ant-empty-description"
               >
                 No Data
-              </p>
+              </div>
             </div>
           </div>
         </div>
@@ -756,7 +717,7 @@ exports[`renders ./components/empty/demo/customize.md correctly 1`] = `
       src="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
     />
   </div>
-  <p
+  <div
     class="ant-empty-description"
   >
     <span>
@@ -767,7 +728,7 @@ exports[`renders ./components/empty/demo/customize.md correctly 1`] = `
         Description
       </a>
     </span>
-  </p>
+  </div>
   <div
     class="ant-empty-footer"
   >
@@ -894,10 +855,10 @@ exports[`renders ./components/empty/demo/simple.md correctly 1`] = `
       </g>
     </svg>
   </div>
-  <p
+  <div
     class="ant-empty-description"
   >
     No Data
-  </p>
+  </div>
 </div>
 `;

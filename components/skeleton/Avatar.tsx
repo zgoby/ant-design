@@ -1,5 +1,5 @@
 import * as React from 'react';
-import omit from 'omit.js';
+import omit from 'rc-util/lib/omit';
 import classNames from 'classnames';
 import { ConfigConsumer, ConfigConsumerProps } from '../config-provider';
 import Element, { SkeletonElementProps } from './Element';
@@ -8,30 +8,31 @@ export interface AvatarProps extends Omit<SkeletonElementProps, 'shape'> {
   shape?: 'circle' | 'square';
 }
 
-// eslint-disable-next-line react/prefer-stateless-function
-class SkeletonAvatar extends React.Component<AvatarProps, any> {
-  static defaultProps: Partial<AvatarProps> = {
-    size: 'default',
-    shape: 'circle',
-  };
-
-  renderSkeletonAvatar = ({ getPrefixCls }: ConfigConsumerProps) => {
-    const { prefixCls: customizePrefixCls, className, active } = this.props;
+const SkeletonAvatar = (props: AvatarProps) => {
+  const renderSkeletonAvatar = ({ getPrefixCls }: ConfigConsumerProps) => {
+    const { prefixCls: customizePrefixCls, className, active } = props;
     const prefixCls = getPrefixCls('skeleton', customizePrefixCls);
-    const otherProps = omit(this.props, ['prefixCls']);
-    const cls = classNames(prefixCls, className, `${prefixCls}-element`, {
-      [`${prefixCls}-active`]: active,
-    });
+    const otherProps = omit(props, ['prefixCls']);
+    const cls = classNames(
+      prefixCls,
+      `${prefixCls}-element`,
+      {
+        [`${prefixCls}-active`]: active,
+      },
+      className,
+    );
     return (
       <div className={cls}>
         <Element prefixCls={`${prefixCls}-avatar`} {...otherProps} />
       </div>
     );
   };
+  return <ConfigConsumer>{renderSkeletonAvatar}</ConfigConsumer>;
+};
 
-  render() {
-    return <ConfigConsumer>{this.renderSkeletonAvatar}</ConfigConsumer>;
-  }
-}
+SkeletonAvatar.defaultProps = {
+  size: 'default',
+  shape: 'circle',
+};
 
 export default SkeletonAvatar;

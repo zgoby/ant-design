@@ -1,9 +1,10 @@
 import * as React from 'react';
-import classnames from 'classnames';
-import { ArrowLeftOutlined, ArrowRightOutlined } from '@ant-design/icons';
-
-import { ConfigConsumer, ConfigConsumerProps } from '../config-provider';
-import Tag from '../tag';
+import classNames from 'classnames';
+import ArrowLeftOutlined from '@ant-design/icons/ArrowLeftOutlined';
+import ArrowRightOutlined from '@ant-design/icons/ArrowRightOutlined';
+import ResizeObserver from 'rc-resize-observer';
+import { ConfigConsumer, ConfigConsumerProps, DirectionType } from '../config-provider';
+import { TagType } from '../tag';
 import Breadcrumb, { BreadcrumbProps } from '../breadcrumb';
 import Avatar, { AvatarProps } from '../avatar';
 import TransButton from '../_util/transButton';
@@ -12,11 +13,12 @@ import LocaleReceiver from '../locale-provider/LocaleReceiver';
 export interface PageHeaderProps {
   backIcon?: React.ReactNode;
   prefixCls?: string;
-  title: React.ReactNode;
+  title?: React.ReactNode;
   subTitle?: React.ReactNode;
   style?: React.CSSProperties;
   breadcrumb?: BreadcrumbProps;
-  tags?: React.ReactElement<Tag> | React.ReactElement<Tag>[];
+  breadcrumbRender?: (props: PageHeaderProps, defaultDom: React.ReactNode) => React.ReactNode;
+  tags?: React.ReactElement<TagType> | React.ReactElement<TagType>[];
   footer?: React.ReactNode;
   extra?: React.ReactNode;
   avatar?: AvatarProps;
@@ -39,9 +41,7 @@ const renderBack = (
         <div className={`${prefixCls}-back`}>
           <TransButton
             onClick={(e: React.MouseEvent<HTMLDivElement>) => {
-              if (onBack) {
-                onBack(e);
-              }
+              onBack?.(e);
             }}
             className={`${prefixCls}-back-button`}
             aria-label={back}
@@ -54,35 +54,58 @@ const renderBack = (
   );
 };
 
-const renderBreadcrumb = (breadcrumb: BreadcrumbProps) => {
-  return <Breadcrumb {...breadcrumb} />;
-};
+const renderBreadcrumb = (breadcrumb: BreadcrumbProps) => <Breadcrumb {...breadcrumb} />;
 
-const getBackIcon = (props: PageHeaderProps, direction: string = 'ltr') => {
+const getBackIcon = (props: PageHeaderProps, direction: DirectionType = 'ltr') => {
   if (props.backIcon !== undefined) {
     return props.backIcon;
   }
   return direction === 'rtl' ? <ArrowRightOutlined /> : <ArrowLeftOutlined />;
 };
 
-const renderTitle = (prefixCls: string, props: PageHeaderProps, direction: string = 'ltr') => {
+const renderTitle = (
+  prefixCls: string,
+  props: PageHeaderProps,
+  direction: DirectionType = 'ltr',
+) => {
   const { title, avatar, subTitle, tags, extra, onBack } = props;
   const headingPrefixCls = `${prefixCls}-heading`;
-  if (title || subTitle || tags || extra) {
-    const backIcon = getBackIcon(props, direction);
-    const backIconDom = renderBack(prefixCls, backIcon, onBack);
-    return (
-      <div className={headingPrefixCls}>
-        {backIconDom}
-        {avatar && <Avatar {...avatar} />}
-        {title && <span className={`${headingPrefixCls}-title`}>{title}</span>}
-        {subTitle && <span className={`${headingPrefixCls}-sub-title`}>{subTitle}</span>}
-        {tags && <span className={`${headingPrefixCls}-tags`}>{tags}</span>}
-        {extra && <span className={`${headingPrefixCls}-extra`}>{extra}</span>}
-      </div>
-    );
+  const hasHeading = title || subTitle || tags || extra;
+  // If there is nothing, return a null
+  if (!hasHeading) {
+    return null;
   }
-  return null;
+  const backIcon = getBackIcon(props, direction);
+  const backIconDom = renderBack(prefixCls, backIcon, onBack);
+  const hasTitle = backIconDom || avatar || hasHeading;
+  return (
+    <div className={headingPrefixCls}>
+      {hasTitle && (
+        <div className={`${headingPrefixCls}-left`}>
+          {backIconDom}
+          {avatar && <Avatar {...avatar} />}
+          {title && (
+            <span
+              className={`${headingPrefixCls}-title`}
+              title={typeof title === 'string' ? title : undefined}
+            >
+              {title}
+            </span>
+          )}
+          {subTitle && (
+            <span
+              className={`${headingPrefixCls}-sub-title`}
+              title={typeof subTitle === 'string' ? subTitle : undefined}
+            >
+              {subTitle}
+            </span>
+          )}
+          {tags && <span className={`${headingPrefixCls}-tags`}>{tags}</span>}
+        </div>
+      )}
+      {extra && <span className={`${headingPrefixCls}-extra`}>{extra}</span>}
+    </div>
+  );
 };
 
 const renderFooter = (prefixCls: string, footer: React.ReactNode) => {
@@ -92,49 +115,72 @@ const renderFooter = (prefixCls: string, footer: React.ReactNode) => {
   return null;
 };
 
-const renderChildren = (prefixCls: string, children: React.ReactNode) => {
-  return <div className={`${prefixCls}-content`}>{children}</div>;
-};
-
-const PageHeader: React.SFC<PageHeaderProps> = props => (
-  <ConfigConsumer>
-    {({ getPrefixCls, pageHeader, direction }: ConfigConsumerProps) => {
-      const {
-        prefixCls: customizePrefixCls,
-        style,
-        footer,
-        children,
-        breadcrumb,
-        className: customizeClassName,
-      } = props;
-      let ghost: undefined | boolean = true;
-
-      // Use `ghost` from `props` or from `ConfigProvider` instead.
-      if ('ghost' in props) {
-        ghost = props.ghost;
-      } else if (pageHeader && 'ghost' in pageHeader) {
-        ghost = pageHeader.ghost;
-      }
-
-      const prefixCls = getPrefixCls('page-header', customizePrefixCls);
-      const breadcrumbDom = breadcrumb && breadcrumb.routes ? renderBreadcrumb(breadcrumb) : null;
-      const className = classnames(prefixCls, customizeClassName, {
-        'has-breadcrumb': breadcrumbDom,
-        'has-footer': footer,
-        [`${prefixCls}-ghost`]: ghost,
-        [`${prefixCls}-rtl`]: direction === 'rtl',
-      });
-
-      return (
-        <div className={className} style={style}>
-          {breadcrumbDom}
-          {renderTitle(prefixCls, props, direction)}
-          {children && renderChildren(prefixCls, children)}
-          {renderFooter(prefixCls, footer)}
-        </div>
-      );
-    }}
-  </ConfigConsumer>
+const renderChildren = (prefixCls: string, children: React.ReactNode) => (
+  <div className={`${prefixCls}-content`}>{children}</div>
 );
+
+const PageHeader: React.FC<PageHeaderProps> = props => {
+  const [compact, updateCompact] = React.useState(false);
+  const onResize = ({ width }: { width: number }) => {
+    updateCompact(width < 768);
+  };
+  return (
+    <ConfigConsumer>
+      {({ getPrefixCls, pageHeader, direction }: ConfigConsumerProps) => {
+        const {
+          prefixCls: customizePrefixCls,
+          style,
+          footer,
+          children,
+          breadcrumb,
+          breadcrumbRender,
+          className: customizeClassName,
+        } = props;
+        let ghost: undefined | boolean = true;
+
+        // Use `ghost` from `props` or from `ConfigProvider` instead.
+        if ('ghost' in props) {
+          ghost = props.ghost;
+        } else if (pageHeader && 'ghost' in pageHeader) {
+          ghost = pageHeader.ghost;
+        }
+
+        const prefixCls = getPrefixCls('page-header', customizePrefixCls);
+
+        const getDefaultBreadcrumbDom = () => {
+          if ((breadcrumb as BreadcrumbProps)?.routes) {
+            return renderBreadcrumb(breadcrumb as BreadcrumbProps);
+          }
+          return null;
+        };
+
+        const defaultBreadcrumbDom = getDefaultBreadcrumbDom();
+
+        //  support breadcrumbRender function
+        const breadcrumbDom =
+          breadcrumbRender?.(props, defaultBreadcrumbDom) || defaultBreadcrumbDom;
+
+        const className = classNames(prefixCls, customizeClassName, {
+          'has-breadcrumb': breadcrumbDom,
+          'has-footer': footer,
+          [`${prefixCls}-ghost`]: ghost,
+          [`${prefixCls}-rtl`]: direction === 'rtl',
+          [`${prefixCls}-compact`]: compact,
+        });
+
+        return (
+          <ResizeObserver onResize={onResize}>
+            <div className={className} style={style}>
+              {breadcrumbDom}
+              {renderTitle(prefixCls, props, direction)}
+              {children && renderChildren(prefixCls, children)}
+              {renderFooter(prefixCls, footer)}
+            </div>
+          </ResizeObserver>
+        );
+      }}
+    </ConfigConsumer>
+  );
+};
 
 export default PageHeader;

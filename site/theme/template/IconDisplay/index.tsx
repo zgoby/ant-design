@@ -28,7 +28,7 @@ interface IconDisplayState {
   searchKey: string;
 }
 
-class IconDisplay extends React.Component<IconDisplayProps, IconDisplayState> {
+class IconDisplay extends React.PureComponent<IconDisplayProps, IconDisplayState> {
   static categories: Categories = categories;
 
   static newIconNames: string[] = [];
@@ -67,6 +67,9 @@ class IconDisplay extends React.Component<IconDisplayProps, IconDisplayState> {
             iconName.toLowerCase().includes(searchKey.toLowerCase()),
           );
         }
+
+        // CopyrightCircle is same as Copyright, don't show it
+        iconList = iconList.filter(icon => icon !== 'CopyrightCircle');
 
         return {
           category: key,
@@ -110,7 +113,7 @@ class IconDisplay extends React.Component<IconDisplayProps, IconDisplayState> {
           </Radio.Group>
           <Input.Search
             placeholder={messages['app.docs.components.icon.search.placeholder']}
-            style={{ marginLeft: 10, flex: 1 }}
+            style={{ margin: '0 10px', flex: 1 }}
             allowClear
             onChange={e => this.handleSearchIcon(e.currentTarget.value)}
             size="large"

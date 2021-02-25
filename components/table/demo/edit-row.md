@@ -9,13 +9,15 @@ title:
 
 带行编辑功能的表格。
 
+> 🛎️ 想要 3 分钟实现？试试 [ProTable 的可编辑表格](https://procomponents.ant.design/components/table#%E5%8F%AF%E7%BC%96%E8%BE%91%E8%A1%A8%E6%A0%BC)！
+
 ## en-US
 
 Table with editable rows.
 
 ```tsx
 import React, { useState } from 'react';
-import { Table, Input, InputNumber, Popconfirm, Form } from 'antd';
+import { Table, Input, InputNumber, Popconfirm, Form, Typography } from 'antd';
 
 interface Item {
   key: string;
@@ -33,10 +35,10 @@ for (let i = 0; i < 100; i++) {
     address: `London Park no. ${i}`,
   });
 }
-interface EditableCellProps {
+interface EditableCellProps extends React.HTMLAttributes<HTMLElement> {
   editing: boolean;
   dataIndex: string;
-  title: React.ReactNode;
+  title: any;
   inputType: 'number' | 'text';
   record: Item;
   index: number;
@@ -82,10 +84,10 @@ const EditableTable = () => {
   const [data, setData] = useState(originData);
   const [editingKey, setEditingKey] = useState('');
 
-  const isEditing = record => record.key === editingKey;
+  const isEditing = (record: Item) => record.key === editingKey;
 
-  const edit = record => {
-    form.setFieldsValue({ ...record });
+  const edit = (record: Partial<Item> & { key: React.Key }) => {
+    form.setFieldsValue({ name: '', age: '', address: '', ...record });
     setEditingKey(record.key);
   };
 
@@ -93,9 +95,9 @@ const EditableTable = () => {
     setEditingKey('');
   };
 
-  const save = async key => {
+  const save = async (key: React.Key) => {
     try {
-      const row = await form.validateFields();
+      const row = (await form.validateFields()) as Item;
 
       const newData = [...data];
       const index = newData.findIndex(item => key === item.key);
@@ -114,7 +116,6 @@ const EditableTable = () => {
       }
     } catch (errInfo) {
       console.log('Validate Failed:', errInfo);
-      return;
     }
   };
 
@@ -140,31 +141,25 @@ const EditableTable = () => {
     {
       title: 'operation',
       dataIndex: 'operation',
-      render: (text, record) => {
+      render: (_: any, record: Item) => {
         const editable = isEditing(record);
         return editable ? (
           <span>
             <a href="javascript:;" onClick={() => save(record.key)} style={{ marginRight: 8 }}>
               Save
             </a>
-            <Popconfirm title="Sure to cancel?" onConfirm={() => cancel(record.key)}>
+            <Popconfirm title="Sure to cancel?" onConfirm={cancel}>
               <a>Cancel</a>
             </Popconfirm>
           </span>
         ) : (
-          <a disabled={editingKey !== ''} onClick={() => edit(record)}>
+          <Typography.Link disabled={editingKey !== ''} onClick={() => edit(record)}>
             Edit
-          </a>
+          </Typography.Link>
         );
       },
     },
   ];
-
-  const components = {
-    body: {
-      cell: EditableCell,
-    },
-  };
 
   const mergedColumns = columns.map(col => {
     if (!col.editable) {
@@ -172,7 +167,7 @@ const EditableTable = () => {
     }
     return {
       ...col,
-      onCell: record => ({
+      onCell: (record: Item) => ({
         record,
         inputType: col.dataIndex === 'age' ? 'number' : 'text',
         dataIndex: col.dataIndex,
@@ -185,7 +180,11 @@ const EditableTable = () => {
   return (
     <Form form={form} component={false}>
       <Table
-        components={components}
+        components={{
+          body: {
+            cell: EditableCell,
+          },
+        }}
         bordered
         dataSource={data}
         columns={mergedColumns}
@@ -202,9 +201,9 @@ ReactDOM.render(<EditableTable />, mountNode);
 ```
 
 ```css
-.editable-row .ant-form-explain {
+.editable-row .ant-form-item-explain {
   position: absolute;
+  top: 100%;
   font-size: 12px;
-  margin-top: -4px;
 }
 ```

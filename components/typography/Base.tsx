@@ -1,24 +1,25 @@
 import * as React from 'react';
 import classNames from 'classnames';
 import toArray from 'rc-util/lib/Children/toArray';
-import findDOMNode from 'rc-util/lib/Dom/findDOMNode';
 import copy from 'copy-to-clipboard';
-import omit from 'omit.js';
-import { EditOutlined, CheckOutlined, CopyOutlined } from '@ant-design/icons';
+import omit from 'rc-util/lib/omit';
+import EditOutlined from '@ant-design/icons/EditOutlined';
+import CheckOutlined from '@ant-design/icons/CheckOutlined';
+import CopyOutlined from '@ant-design/icons/CopyOutlined';
 import ResizeObserver from 'rc-resize-observer';
-import { ConfigConsumerProps, configConsumerProps } from '../config-provider';
-import { withConfigConsumer } from '../config-provider/context';
+import { AutoSizeType } from 'rc-textarea/lib/ResizableTextArea';
+import { ConfigConsumerProps, configConsumerProps, ConfigContext } from '../config-provider';
 import LocaleReceiver from '../locale-provider/LocaleReceiver';
-import warning from '../_util/warning';
+import devWarning from '../_util/devWarning';
 import TransButton from '../_util/transButton';
 import raf from '../_util/raf';
-import isStyleSupport from '../_util/styleChecker';
+import { isStyleSupport } from '../_util/styleChecker';
 import Tooltip from '../tooltip';
 import Typography, { TypographyProps } from './Typography';
 import Editable from './Editable';
 import measure from './util';
 
-export type BaseType = 'secondary' | 'danger' | 'warning';
+export type BaseType = 'secondary' | 'success' | 'warning' | 'danger';
 
 const isLineClampSupport = isStyleSupport('webkitLineClamp');
 const isTextOverflowSupport = isStyleSupport('textOverflow');
@@ -26,19 +27,28 @@ const isTextOverflowSupport = isStyleSupport('textOverflow');
 interface CopyConfig {
   text?: string;
   onCopy?: () => void;
+  icon?: React.ReactNode;
+  tooltips?: boolean | React.ReactNode;
 }
 
 interface EditConfig {
   editing?: boolean;
+  icon?: React.ReactNode;
+  tooltip?: boolean | React.ReactNode;
   onStart?: () => void;
   onChange?: (value: string) => void;
+  maxLength?: number;
+  autoSize?: boolean | AutoSizeType;
 }
 
-interface EllipsisConfig {
+export interface EllipsisConfig {
   rows?: number;
   expandable?: boolean;
   suffix?: string;
-  onExpand?: () => void;
+  symbol?: React.ReactNode;
+  onExpand?: React.MouseEventHandler<HTMLElement>;
+  onEllipsis?: (ellipsis: boolean) => void;
+  tooltip?: React.ReactNode;
 }
 
 export interface BlockProps extends TypographyProps {
@@ -54,10 +64,11 @@ export interface BlockProps extends TypographyProps {
   underline?: boolean;
   delete?: boolean;
   strong?: boolean;
+  keyboard?: boolean;
 }
 
 function wrapperDecorations(
-  { mark, code, underline, delete: del, strong }: BlockProps,
+  { mark, code, underline, delete: del, strong, keyboard }: BlockProps,
   content: React.ReactNode,
 ) {
   let currentContent = content;
@@ -73,6 +84,7 @@ function wrapperDecorations(
   wrap(del, 'del');
   wrap(code, 'code');
   wrap(mark, 'mark');
+  wrap(keyboard, 'kbd');
 
   return currentContent;
 }
@@ -100,7 +112,9 @@ interface Locale {
 
 const ELLIPSIS_STR = '...';
 
-class Base extends React.Component<InternalBlockProps & ConfigConsumerProps, BaseState> {
+class Base extends React.Component<InternalBlockProps, BaseState> {
+  static contextType = ConfigContext;
+
   static defaultProps = {
     children: '',
   };
@@ -108,7 +122,7 @@ class Base extends React.Component<InternalBlockProps & ConfigConsumerProps, Bas
   static getDerivedStateFromProps(nextProps: BlockProps) {
     const { children, editable } = nextProps;
 
-    warning(
+    devWarning(
       !editable || typeof children === 'string',
       'Typography',
       'When `editable` is enabled, the `children` should use string.',
@@ -117,9 +131,11 @@ class Base extends React.Component<InternalBlockProps & ConfigConsumerProps, Bas
     return {};
   }
 
-  editIcon?: TransButton;
+  context: ConfigConsumerProps;
 
-  content?: HTMLElement;
+  editIcon?: HTMLDivElement;
+
+  contentRef = React.createRef<HTMLElement>();
 
   copyId?: number;
 
@@ -163,14 +179,17 @@ class Base extends React.Component<InternalBlockProps & ConfigConsumerProps, Bas
     raf.cancel(this.rafId);
   }
 
-  // =============== Expend ===============
-  onExpandClick = () => {
+  getPrefixCls = () => {
+    const { prefixCls: customizePrefixCls } = this.props;
+    const { getPrefixCls } = this.context;
+    return getPrefixCls('typography', customizePrefixCls);
+  };
+
+  // =============== Expand ===============
+  onExpandClick: React.MouseEventHandler<HTMLElement> = e => {
     const { onExpand } = this.getEllipsis();
     this.setState({ expanded: true });
-
-    if (onExpand) {
-      onExpand();
-    }
+    (onExpand as React.MouseEventHandler<HTMLElement>)?.(e);
   };
 
   // ================ Edit ================
@@ -180,10 +199,7 @@ class Base extends React.Component<InternalBlockProps & ConfigConsumerProps, Bas
 
   onEditChange = (value: string) => {
     const { onChange } = this.getEditable();
-    if (onChange) {
-      onChange(value);
-    }
-
+    onChange?.(value);
     this.triggerEdit(false);
   };
 
@@ -192,7 +208,8 @@ class Base extends React.Component<InternalBlockProps & ConfigConsumerProps, Bas
   };
 
   // ================ Copy ================
-  onCopyClick = () => {
+  onCopyClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.preventDefault();
     const { children, copyable } = this.props;
     const copyConfig: CopyConfig = {
       ...(typeof copyable === 'object' ? copyable : null),
@@ -236,11 +253,7 @@ class Base extends React.Component<InternalBlockProps & ConfigConsumerProps, Bas
     };
   }
 
-  setContentRef = (node: HTMLElement) => {
-    this.content = node;
-  };
-
-  setEditRef = (node: TransButton) => {
+  setEditRef = (node: HTMLDivElement) => {
     this.editIcon = node;
   };
 
@@ -269,11 +282,11 @@ class Base extends React.Component<InternalBlockProps & ConfigConsumerProps, Bas
   canUseCSSEllipsis(): boolean {
     const { clientRendered } = this.state;
     const { editable, copyable } = this.props;
-    const { rows, expandable, suffix } = this.getEllipsis();
+    const { rows, expandable, suffix, onEllipsis, tooltip } = this.getEllipsis();
 
-    if (suffix) return false;
+    if (suffix || tooltip) return false;
     // Can't use css ellipsis since we need to provide the place for button
-    if (editable || copyable || expandable || !clientRendered) {
+    if (editable || copyable || expandable || !clientRendered || onEllipsis) {
       return false;
     }
 
@@ -286,21 +299,21 @@ class Base extends React.Component<InternalBlockProps & ConfigConsumerProps, Bas
 
   syncEllipsis() {
     const { ellipsisText, isEllipsis, expanded } = this.state;
-    const { rows, suffix } = this.getEllipsis();
+    const { rows, suffix, onEllipsis } = this.getEllipsis();
     const { children } = this.props;
-    if (!rows || rows < 0 || !this.content || expanded) return;
+    if (!rows || rows < 0 || !this.contentRef.current || expanded) return;
 
     // Do not measure if css already support ellipsis
     if (this.canUseCSSEllipsis()) return;
 
-    warning(
+    devWarning(
       toArray(children).every((child: React.ReactNode) => typeof child === 'string'),
       'Typography',
       '`ellipsis` should use string as children only.',
     );
 
     const { content, text, ellipsis } = measure(
-      findDOMNode(this.content),
+      this.contentRef.current,
       { rows, suffix },
       children,
       this.renderOperations(true),
@@ -308,12 +321,14 @@ class Base extends React.Component<InternalBlockProps & ConfigConsumerProps, Bas
     );
     if (ellipsisText !== text || isEllipsis !== ellipsis) {
       this.setState({ ellipsisText: text, ellipsisContent: content, isEllipsis: ellipsis });
+      if (isEllipsis !== ellipsis && onEllipsis) {
+        onEllipsis(ellipsis);
+      }
     }
   }
 
   renderExpand(forceRender?: boolean) {
-    const { expandable } = this.getEllipsis();
-    const { prefixCls } = this.props;
+    const { expandable, symbol } = this.getEllipsis();
     const { expanded, isEllipsis } = this.state;
 
     if (!expandable) return null;
@@ -321,31 +336,43 @@ class Base extends React.Component<InternalBlockProps & ConfigConsumerProps, Bas
     // force render expand icon for measure usage or it will cause dead loop
     if (!forceRender && (expanded || !isEllipsis)) return null;
 
+    let expandContent: React.ReactNode;
+    if (symbol) {
+      expandContent = symbol;
+    } else {
+      expandContent = this.expandStr;
+    }
+
     return (
       <a
         key="expand"
-        className={`${prefixCls}-expand`}
+        className={`${this.getPrefixCls()}-expand`}
         onClick={this.onExpandClick}
         aria-label={this.expandStr}
       >
-        {this.expandStr}
+        {expandContent}
       </a>
     );
   }
 
   renderEdit() {
-    const { editable, prefixCls } = this.props;
+    const { editable } = this.props;
     if (!editable) return;
 
+    const { icon, tooltip } = editable as EditConfig;
+
+    const title = toArray(tooltip)[0] || this.editStr;
+    const ariaLabel = typeof title === 'string' ? title : '';
+
     return (
-      <Tooltip key="edit" title={this.editStr}>
+      <Tooltip key="edit" title={tooltip === false ? '' : title}>
         <TransButton
           ref={this.setEditRef}
-          className={`${prefixCls}-edit`}
+          className={`${this.getPrefixCls()}-edit`}
           onClick={this.onEditClick}
-          aria-label={this.editStr}
+          aria-label={ariaLabel}
         >
-          <EditOutlined role="button" />
+          {icon || <EditOutlined role="button" />}
         </TransButton>
       </Tooltip>
     );
@@ -353,34 +380,48 @@ class Base extends React.Component<InternalBlockProps & ConfigConsumerProps, Bas
 
   renderCopy() {
     const { copied } = this.state;
-    const { copyable, prefixCls } = this.props;
+    const { copyable } = this.props;
     if (!copyable) return;
 
-    const title = copied ? this.copiedStr : this.copyStr;
+    const prefixCls = this.getPrefixCls();
+
+    const { tooltips } = copyable as CopyConfig;
+    let tooltipNodes = toArray(tooltips) as React.ReactNode[];
+    if (tooltipNodes.length === 0) {
+      tooltipNodes = [this.copyStr, this.copiedStr];
+    }
+    const title = copied ? tooltipNodes[1] : tooltipNodes[0];
+    const ariaLabel = typeof title === 'string' ? title : '';
+    const icons = toArray((copyable as CopyConfig).icon);
+
     return (
-      <Tooltip key="copy" title={title}>
+      <Tooltip key="copy" title={tooltips === false ? '' : title}>
         <TransButton
           className={classNames(`${prefixCls}-copy`, copied && `${prefixCls}-copy-success`)}
           onClick={this.onCopyClick}
-          aria-label={title}
+          aria-label={ariaLabel}
         >
-          {copied ? <CheckOutlined /> : <CopyOutlined />}
+          {copied ? icons[1] || <CheckOutlined /> : icons[0] || <CopyOutlined />}
         </TransButton>
       </Tooltip>
     );
   }
 
   renderEditInput() {
-    const { children, prefixCls, className, style, direction } = this.props;
+    const { children, className, style } = this.props;
+    const { direction } = this.context;
+    const { maxLength, autoSize } = this.getEditable();
     return (
       <Editable
         value={typeof children === 'string' ? children : ''}
         onSave={this.onEditChange}
         onCancel={this.onEditCancel}
-        prefixCls={prefixCls}
+        prefixCls={this.getPrefixCls()}
         className={className}
         style={style}
         direction={direction}
+        maxLength={maxLength}
+        autoSize={autoSize}
       />
     );
   }
@@ -393,18 +434,11 @@ class Base extends React.Component<InternalBlockProps & ConfigConsumerProps, Bas
 
   renderContent() {
     const { ellipsisContent, isEllipsis, expanded } = this.state;
-    const {
-      component,
-      children,
-      className,
-      prefixCls,
-      type,
-      disabled,
-      style,
-      title,
-      ...restProps
-    } = this.props;
-    const { rows, suffix } = this.getEllipsis();
+    const { component, children, className, type, disabled, style, ...restProps } = this.props;
+    const { direction } = this.context;
+    const { rows, suffix, tooltip } = this.getEllipsis();
+
+    const prefixCls = this.getPrefixCls();
 
     const textProps = omit(restProps, [
       'prefixCls',
@@ -412,35 +446,50 @@ class Base extends React.Component<InternalBlockProps & ConfigConsumerProps, Bas
       'copyable',
       'ellipsis',
       'mark',
-      'underline',
-      'mark',
       'code',
       'delete',
       'underline',
       'strong',
-      ...configConsumerProps,
-    ]);
+      'keyboard',
+      ...(configConsumerProps as any),
+    ]) as any;
+
     const cssEllipsis = this.canUseCSSEllipsis();
     const cssTextOverflow = rows === 1 && cssEllipsis;
     const cssLineClamp = rows && rows > 1 && cssEllipsis;
 
     let textNode: React.ReactNode = children;
-    let ariaLabel: string | undefined;
 
     // Only use js ellipsis when css ellipsis not support
     if (rows && isEllipsis && !expanded && !cssEllipsis) {
-      ariaLabel = title;
+      const { title } = restProps;
+      let restContent = title || '';
       if (!title && (typeof children === 'string' || typeof children === 'number')) {
-        ariaLabel = String(children);
+        restContent = String(children);
       }
+
+      // show rest content as title on symbol
+      restContent = restContent?.slice(String(ellipsisContent || '').length);
+
       // We move full content to outer element to avoid repeat read the content by accessibility
       textNode = (
-        <span title={ariaLabel} aria-hidden="true">
+        <>
           {ellipsisContent}
-          {ELLIPSIS_STR}
+          <span title={restContent} aria-hidden="true">
+            {ELLIPSIS_STR}
+          </span>
           {suffix}
-        </span>
+        </>
       );
+
+      // If provided tooltip, we need wrap with span to let Tooltip inject events
+      if (tooltip) {
+        textNode = (
+          <Tooltip title={tooltip === true ? children : tooltip}>
+            <span>{textNode}</span>
+          </Tooltip>
+        );
+      }
     } else {
       textNode = (
         <>
@@ -463,20 +512,23 @@ class Base extends React.Component<InternalBlockProps & ConfigConsumerProps, Bas
           return (
             <ResizeObserver onResize={this.resizeOnNextFrame} disabled={!rows}>
               <Typography
-                className={classNames(className, {
-                  [`${prefixCls}-${type}`]: type,
-                  [`${prefixCls}-disabled`]: disabled,
-                  [`${prefixCls}-ellipsis`]: rows,
-                  [`${prefixCls}-ellipsis-single-line`]: cssTextOverflow,
-                  [`${prefixCls}-ellipsis-multiple-line`]: cssLineClamp,
-                })}
+                className={classNames(
+                  {
+                    [`${prefixCls}-${type}`]: type,
+                    [`${prefixCls}-disabled`]: disabled,
+                    [`${prefixCls}-ellipsis`]: rows,
+                    [`${prefixCls}-ellipsis-single-line`]: cssTextOverflow,
+                    [`${prefixCls}-ellipsis-multiple-line`]: cssLineClamp,
+                  },
+                  className,
+                )}
                 style={{
                   ...style,
-                  WebkitLineClamp: cssLineClamp ? rows : null,
+                  WebkitLineClamp: cssLineClamp ? rows : undefined,
                 }}
                 component={component}
-                ref={this.setContentRef}
-                aria-label={ariaLabel}
+                ref={this.contentRef}
+                direction={direction}
                 {...textProps}
               >
                 {textNode}
@@ -499,6 +551,4 @@ class Base extends React.Component<InternalBlockProps & ConfigConsumerProps, Bas
   }
 }
 
-export default withConfigConsumer<InternalBlockProps>({
-  prefixCls: 'typography',
-})(Base);
+export default Base;

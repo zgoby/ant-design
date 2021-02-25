@@ -4,21 +4,18 @@
 @carousel-prefix-cls: ~'@{ant-prefix}-carousel';
 
 .@{carousel-prefix-cls} {
-  .reset-component;
-
-  &-rtl {
-    direction: rtl;
-  }
+  .reset-component();
 
   .slick-slider {
     position: relative;
     display: block;
     box-sizing: border-box;
-    -webkit-touch-callout: none;
     -ms-touch-action: pan-y;
     touch-action: pan-y;
+    -webkit-touch-callout: none;
     -webkit-tap-highlight-color: transparent;
   }
+
   .slick-list {
     position: relative;
     display: block;
@@ -37,14 +34,34 @@
     .slick-slide {
       pointer-events: none;
 
+      // https://github.com/ant-design/ant-design/issues/23294
+      input.@{ant-prefix}-radio-input,
+      input.@{ant-prefix}-checkbox-input {
+        visibility: hidden;
+      }
+
       &.slick-active {
         pointer-events: auto;
+
+        input.@{ant-prefix}-radio-input,
+        input.@{ant-prefix}-checkbox-input {
+          visibility: visible;
+        }
+      }
+
+      // fix Carousel content height not match parent node
+      // when children is empty node
+      // https://github.com/ant-design/ant-design/issues/25878
+      > div > div {
+        vertical-align: bottom;
       }
     }
   }
+
   .slick-slider .slick-track,
   .slick-slider .slick-list {
     transform: translate3d(0, 0, 0);
+    touch-action: pan-y;
   }
 
   .slick-track {
@@ -52,11 +69,6 @@
     top: 0;
     left: 0;
     display: block;
-
-    .@{carousel-prefix-cls}-rtl & {
-      right: 0;
-      left: auto;
-    }
 
     &::before,
     &::after {
@@ -72,6 +84,7 @@
       visibility: hidden;
     }
   }
+
   .slick-slide {
     display: none;
     float: left;
@@ -81,6 +94,7 @@
     img {
       display: block;
     }
+
     &.slick-loading img {
       display: none;
     }
@@ -101,7 +115,6 @@
   .slick-vertical .slick-slide {
     display: block;
     height: auto;
-    border: @border-width-base @border-style-base transparent;
   }
   .slick-arrow.slick-hidden {
     display: none;
@@ -144,29 +157,12 @@
     &::before {
       content: '←';
     }
-
-    .@{carousel-prefix-cls}-rtl & {
-      right: -25px;
-      left: auto;
-
-      &::before {
-        content: '→';
-      }
-    }
   }
 
   .slick-next {
     right: -25px;
     &::before {
       content: '→';
-    }
-
-    .@{carousel-prefix-cls}-rtl & {
-      right: auto;
-      left: -25px;
-      &::before {
-        content: '←';
-      }
     }
   }
 
@@ -181,12 +177,8 @@
     justify-content: center;
     margin-right: 15%;
     margin-left: 15%;
-    padding-right: 0;
+    padding-left: 0;
     list-style: none;
-
-    .@{carousel-prefix-cls}-rtl& {
-      flex-direction: row-reverse;
-    }
 
     &-bottom {
       bottom: 12px;
@@ -253,10 +245,6 @@
     margin: 0;
     transform: translateY(-50%);
 
-    .@{carousel-prefix-cls}-rtl& {
-      flex-direction: column;
-    }
-
     &-left {
       right: auto;
       left: 12px;
@@ -286,3 +274,5 @@
     }
   }
 }
+
+@import './rtl';

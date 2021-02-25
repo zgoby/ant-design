@@ -4,14 +4,10 @@
 @statistic-prefix-cls: ~'@{ant-prefix}-statistic';
 
 .@{statistic-prefix-cls} {
-  .reset-component;
-
-  &-rtl {
-    direction: rtl;
-  }
+  .reset-component();
 
   &-title {
-    margin-bottom: 4px;
+    margin-bottom: @margin-xss;
     color: @text-color-secondary;
     font-size: @statistic-title-font-size;
   }
@@ -22,9 +18,8 @@
     font-family: @statistic-font-family;
 
     &-value {
-      &-decimal {
-        font-size: @statistic-unit-font-size;
-      }
+      display: inline-block;
+      direction: ltr;
     }
 
     &-prefix,
@@ -34,21 +29,12 @@
 
     &-prefix {
       margin-right: 4px;
-
-      .@{statistic-prefix-cls}-rtl & {
-        margin-right: 0;
-        margin-left: 4px;
-      }
     }
 
     &-suffix {
       margin-left: 4px;
-      font-size: @statistic-unit-font-size;
-
-      .@{statistic-prefix-cls}-rtl & {
-        margin-right: 4px;
-        margin-left: 0;
-      }
     }
   }
 }
+
+@import './rtl';

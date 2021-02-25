@@ -1,5 +1,63 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Form Form item hidden noStyle should not work when hidden 1`] = `
+<form
+  class="ant-form ant-form-horizontal"
+>
+  <div
+    class="ant-row ant-form-item ant-form-item-hidden"
+  >
+    <div
+      class="ant-col ant-form-item-control"
+    >
+      <div
+        class="ant-form-item-control-input"
+      >
+        <div
+          class="ant-form-item-control-input-content"
+        >
+          <input
+            class="ant-input"
+            id="light"
+            type="text"
+            value=""
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+`;
+
+exports[`Form Form item hidden should work 1`] = `
+<form
+  class="ant-form ant-form-horizontal"
+>
+  <div
+    class="ant-row ant-form-item ant-form-item-hidden"
+  >
+    <div
+      class="ant-col ant-form-item-control"
+    >
+      <div
+        class="ant-form-item-control-input"
+      >
+        <div
+          class="ant-form-item-control-input-content"
+        >
+          <input
+            class="ant-input"
+            id="light"
+            type="text"
+            value=""
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+`;
+
 exports[`Form Form.Item should support data-*、aria-* and custom attribute 1`] = `
 <form
   class="ant-form ant-form-horizontal"
@@ -16,7 +74,11 @@ exports[`Form Form.Item should support data-*、aria-* and custom attribute 1`] 
       <div
         class="ant-form-item-control-input"
       >
-        text
+        <div
+          class="ant-form-item-control-input-content"
+        >
+          text
+        </div>
       </div>
     </div>
   </div>
@@ -38,7 +100,11 @@ exports[`Form rtl render component should be rendered correctly in RTL direction
   >
     <div
       class="ant-form-item-control-input"
-    />
+    >
+      <div
+        class="ant-form-item-control-input-content"
+      />
+    </div>
   </div>
 </div>
 `;

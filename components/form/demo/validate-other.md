@@ -37,7 +37,7 @@ const formItemLayout = {
   wrapperCol: { span: 14 },
 };
 
-const normFile = e => {
+const normFile = (e: any) => {
   console.log('Upload event:', e);
   if (Array.isArray(e)) {
     return e;
@@ -46,7 +46,7 @@ const normFile = e => {
 };
 
 const Demo = () => {
-  const onFinish = values => {
+  const onFinish = (values: any) => {
     console.log('Received values of form: ', values);
   };
 
@@ -56,8 +56,8 @@ const Demo = () => {
       {...formItemLayout}
       onFinish={onFinish}
       initialValues={{
-        ['input-number']: 3,
-        ['checkbox-group']: ['A', 'B'],
+        'input-number': 3,
+        'checkbox-group': ['A', 'B'],
         rate: 3.5,
       }}
     >
@@ -120,7 +120,11 @@ const Demo = () => {
         </Radio.Group>
       </Form.Item>
 
-      <Form.Item name="radio-button" label="Radio.Button">
+      <Form.Item
+        name="radio-button"
+        label="Radio.Button"
+        rules={[{ required: true, message: 'Please pick an item!' }]}
+      >
         <Radio.Group>
           <Radio.Button value="a">item 1</Radio.Button>
           <Radio.Button value="b">item 2</Radio.Button>
@@ -129,24 +133,37 @@ const Demo = () => {
       </Form.Item>
 
       <Form.Item name="checkbox-group" label="Checkbox.Group">
-        <Checkbox.Group style={{ width: '100%' }}>
+        <Checkbox.Group>
           <Row>
             <Col span={8}>
-              <Checkbox value="A">A</Checkbox>
+              <Checkbox value="A" style={{ lineHeight: '32px' }}>
+                A
+              </Checkbox>
             </Col>
             <Col span={8}>
-              <Checkbox disabled value="B">
+              <Checkbox value="B" style={{ lineHeight: '32px' }} disabled>
                 B
               </Checkbox>
             </Col>
             <Col span={8}>
-              <Checkbox value="C">C</Checkbox>
+              <Checkbox value="C" style={{ lineHeight: '32px' }}>
+                C
+              </Checkbox>
             </Col>
             <Col span={8}>
-              <Checkbox value="D">D</Checkbox>
+              <Checkbox value="D" style={{ lineHeight: '32px' }}>
+                D
+              </Checkbox>
             </Col>
             <Col span={8}>
-              <Checkbox value="E">E</Checkbox>
+              <Checkbox value="E" style={{ lineHeight: '32px' }}>
+                E
+              </Checkbox>
+            </Col>
+            <Col span={8}>
+              <Checkbox value="F" style={{ lineHeight: '32px' }}>
+                F
+              </Checkbox>
             </Col>
           </Row>
         </Checkbox.Group>
@@ -164,9 +181,7 @@ const Demo = () => {
         extra="longgggggggggggggggggggggggggggggggggg"
       >
         <Upload name="logo" action="/upload.do" listType="picture">
-          <Button>
-            <UploadOutlined /> Click to upload
-          </Button>
+          <Button icon={<UploadOutlined />}>Click to upload</Button>
         </Upload>
       </Form.Item>
 

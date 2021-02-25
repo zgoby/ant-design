@@ -5,8 +5,8 @@
 @mention-prefix-cls: ~'@{ant-prefix}-mentions';
 
 .@{mention-prefix-cls} {
-  .reset-component;
-  .input;
+  .reset-component();
+  .input();
 
   position: relative;
   display: inline-block;
@@ -64,10 +64,6 @@
       background-color: transparent;
     }
     .placeholder();
-
-    &:read-only {
-      cursor: default;
-    }
   }
 
   &-measure {
@@ -89,7 +85,7 @@
   // ================== Dropdown ==================
   &-dropdown {
     // Ref select dropdown style
-    .reset-component;
+    .reset-component();
 
     position: absolute;
     top: -9999px;
@@ -123,7 +119,7 @@
         overflow: hidden;
         color: @text-color;
         font-weight: normal;
-        line-height: 22px;
+        line-height: @line-height-base;
         white-space: nowrap;
         text-overflow: ellipsis;
         cursor: pointer;
@@ -165,3 +161,5 @@
     }
   }
 }
+
+@import './rtl';

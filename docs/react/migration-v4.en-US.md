@@ -3,7 +3,7 @@ order: 8
 title: V3 to V4
 ---
 
-This document will help you upgrade from antd `3.x` version to antd `4.x` version. If you are using `2.x` or older version, please refer to the previous [upgrade document] (https: / /github.com/ant-design/ant-design/blob/2adf8ced24da7b3cb46a3475854a83d76a98c536/CHANGELOG.zh-CN.md#300) to 3.x.
+This document will help you upgrade from antd `3.x` version to antd `4.x` version. If you are using `2.x` or older version, please refer to the previous [upgrade document](https://github.com/ant-design/ant-design/blob/2adf8ced24da7b3cb46a3475854a83d76a98c536/CHANGELOG.en-US.md#300) to 3.x.
 
 ## Upgrade preparation
 
@@ -17,6 +17,7 @@ This document will help you upgrade from antd `3.x` version to antd `4.x` versio
 ### Design specification
 
 - Line height changes from `1.5`(`21px`) to `1.5715`(`22px`).
+- Darken font color from `rgba(0, 0, 0, 0.65)` to `rgba(0, 0, 0, 0.85)`. `4.6.0`
 - Basic rounded corner adjustment, changed from `4px` to `2px`.
 - Exchanged Selected and Hovered color.
 - Global shadow optimization, adjusted to three layers of shadows to distinguish control hierarchies.
@@ -26,11 +27,15 @@ This document will help you upgrade from antd `3.x` version to antd `4.x` versio
 - The color brightness of the dividing line has been reduced from `#E8E8E8` to`#F0F0F0`.
 - DatePicker interactive redo, range selection can now select start and end time separately.
 - Table change default background color from transparent to white.
+- Smaller Tabs bar width.
+- New Tabs interaction and dom structure is changed in `4.3.0`.
 
 ### Compatibility
 
 - The minimum supported version of IE is IE 11.
 - The minimum supported version of React is React 16.9, and some components have started to refactor using hooks.
+  - Internal using `useMemo` for performance, do not use mutable data as props.
+- The minimum supported version of less.js is `3.1.0`, we recommend using less `4.x`.
 
 #### Remove deprecated API
 
@@ -52,10 +57,13 @@ This document will help you upgrade from antd `3.x` version to antd `4.x` versio
 - Removed the `body` attribute of Transfer. Please use `children` instead.
 - Removed the `lazy` attribute of Transfer, which did not really optimize the effect.
 - Removed `combobox` mode, please use `AutoComplete` instead.
+- Removed the `rowSelection.hideDefaultSelections` property of Table, please use `SELECTION_ALL` and `SELECTION_INVERT` in `rowSelection.selections` instead, [Custom Selection](/components/table/#components-table-demo-row-selection-custom).
+- Deprecated Button.Group, please use `Space` instead.
+- less variables were changed like DatePicker/TimePicker/Calendar related variables or [@btn-padding-base](https://github.com/ant-design/ant-design/issues/28141), please check [3.x variables](https://github.com/ant-design/ant-design/blob/3.x-stable/components/style/themes/default.less) and [4.x variables](https://github.com/ant-design/ant-design/blob/master/components/style/themes/default.less) for more details.
 
 #### Icon upgrade
 
-In `antd @ 3.9.0`, we introduced the svg icon ([Why use the svg icon?](Https://github.com/ant-design/ant-design/issues/10353)). The icon API using the string name cannot be loaded on demand, so the svg icon file is fully introduced, which greatly increases the size of the packaged product. In 4.0, we adjusted the icon usage API to support tree shaking, reducing the default package size of antd by about 150 KB (Gzipped).
+In `antd @ 3.9.0`, we introduced the svg icon ([Why use the svg icon?](https://github.com/ant-design/ant-design/issues/10353)). The icon API using the string name cannot be loaded on demand, so the svg icon file is fully introduced, which greatly increases the size of the packaged product. In 4.0, we adjusted the icon usage API to support tree shaking, reducing the default package size of antd by about 150 KB (Gzipped).
 
 Legacy Icon usage will be discarded:
 
@@ -73,22 +81,22 @@ const Demo = () => (
 It will be imported on demand in v4:
 
 ```diff
-import { Button } from 'antd';
+  import { Button } from 'antd';
 
-// tree-shaking supported
+  // tree-shaking supported
 - import { Icon } from 'antd';
 + import { SmileOutlined } from '@ant-design/icons';
 
-const Demo = () => (
-  <div>
--    <Icon type="smile" />
-+    <SmileOutlined />
-    <Button icon={<SmileOutlined />} />
-  </div>
-);
+  const Demo = () => (
+      <div>
+-       <Icon type="smile" />
++       <SmileOutlined />
+      <Button icon={<SmileOutlined />} />
+    </div>
+  );
 
-// or directly import
-import SmileOutlined from '@ant-design/icons/SmileOutlined';
+  // or directly import
+  import SmileOutlined from '@ant-design/icons/SmileOutlined';
 ```
 
 You will still be able to continue using the compatibility pack:
@@ -107,16 +115,48 @@ const Demo = () => (
 
 #### Component refactoring
 
-- Form rewrite. No need to use `Form.create`. See [here](/components/form/v3) for migration documentation.
+- Form rewrite.
+  - No need to use `Form.create`.
+  - Nest fields definition changes from `'xxx.yyy'` to `['xxx', 'yyy']`.
+  - `validateTrigger` no long collect field value.
+  - See [here](/components/form/v3) for migration documentation.
 - DatePicker rewrite
   - Provide the `picker` property for selector switching.
   - Range selection can now select start and end times individually.
-- Tree, Select, TreeSelect, AutoComplete use virtual scrolling.
-  - `dropdownMatchSelectWidth` no longer automatically adapts to the content width, please set the dropdown width with numbers.
+  - `onPanelChange` will also trigger when panel value changed.
+  - [Date cell className of Custom style demo](/components/date-picker/#components-date-picker-demo-date-render) changed from `ant-calendar-date` to `ant-picker-cell-inner`.
+- Tree, Select, TreeSelect, AutoComplete rewrite
+  - use virtual scrolling.
+  - `onBlur` no longer trigger value change and return React origin `event` object instead.
+    - If config `validateTrigger` as `onBlur` with compatible Form, please change to `onChange` instead.
+  - AutoComplete no longer support `optionLabelProp`. Please set Option `value` directly.
+  - AutoComplete options definition align with Select. Please use `options` instead of `dataSource`.
+  - Select remove `dropdownMenuStyle` prop.
+  - Use `listHeight` to config popup height instead of `dropdownStyle`.
+  - `filterOption` return origin data with second params instead. No need to use `option.props.children` for matching.
+  - Tree, TreeSelect will display `label` when `title` and `label` are both set. The adjustment is for aligning behavior with `labelInValue`. [New behavior](https://codesandbox.io/s/keen-curran-d3qnp) (show 'label' on first node). [Old behavior](https://codesandbox.io/s/muddy-darkness-57lb3) (show 'title' on first node).
 - The Grid component uses flex layout.
 - Button's `danger` is now treated as a property instead of a button type.
 - Input, Select set `value` to `undefined` is uncontrolled mode now.
-- Table will keep at least one column even if `columns` is empty.
+- Table rewrite.
+  - will keep at least one column even if `columns` is empty.
+  - Nest `dataIndex` definition changes from `'xxx.yyy'` to `['xxx', 'yyy']`.
+- Pagination will default set `showSizeChanger` to `true` since `4.1.0`. This change also applied on Table component.
+- Tabs rewrite. ([4.3.0](https://github.com/ant-design/ant-design/pull/24552))
+  - Dom structrue is changed, please check style if you override tabs css.
+  - `onPrevClick` 和 `onNextClick` would be not working anymore since we improve tabs scroll behavior.
+
+```diff
+<Table
+  columns={[
+    {
+      title: 'Age',
+-     dataIndex: 'user.age',
++     dataIndex: ['user', 'age'],
+    },
+  ]}
+/>
+```
 
 ## Start upgrading
 
@@ -138,11 +178,11 @@ yarn global add @ant-design/codemod-v4
 antd4-codemod src
 ```
 
-![codemod running](https://gw.alipayobjects.com/mdn/rms_08e378/afts/img/A*QdcbQoLC-cQAAAAAAAAAAABkARQnAQ)
+<img src="https://gw.alipayobjects.com/mdn/rms_08e378/afts/img/A*QdcbQoLC-cQAAAAAAAAAAABkARQnAQ" alt="codemod running" width="720" />
 
 For parts that cannot be modified automatically, codemod will prompt on the command line, and it is recommended to modify them manually as prompted. After modification, you can run the above command repeatedly to check.
 
-![contains an invalid icon](https://gw.alipayobjects.com/mdn/rms_08e378/afts/img/A*KQwWSrPirlUAAAAAAAAAAABkARQnAQ)
+<img src="https://gw.alipayobjects.com/mdn/rms_08e378/afts/img/A*KQwWSrPirlUAAAAAAAAAAABkARQnAQ" alt="contains an invalid icon" width="720" />
 
 > Note that codemod cannot cover all scenarios, and it is recommended to check for incompatible changes one by one.
 

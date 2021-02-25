@@ -9,6 +9,16 @@ describe('PageHeader', () => {
   mountTest(PageHeader);
   rtlTest(PageHeader);
 
+  const mockGetBoundingClientRect = jest.spyOn(HTMLElement.prototype, 'getBoundingClientRect');
+
+  beforeAll(() => {
+    mockGetBoundingClientRect.mockReturnValue({ width: 100 });
+  });
+
+  afterAll(() => {
+    mockGetBoundingClientRect.mockRestore();
+  });
+
   it('pageHeader should not contain back it back', () => {
     const routes = [
       {
@@ -38,6 +48,26 @@ describe('PageHeader', () => {
     const wrapper = mount(<PageHeader title="Page Title" breadcrumb={{ routes }} />);
     expect(wrapper.find('.ant-breadcrumb')).toHaveLength(1);
     expect(wrapper.find('.ant-page-header-back')).toHaveLength(0);
+  });
+
+  it('pageHeader support breadcrumbRender', () => {
+    const wrapper = mount(
+      <PageHeader title="Page Title" breadcrumbRender={() => <div id="test">test</div>} />,
+    );
+    expect(wrapper.find('#test')).toHaveLength(1);
+    expect(wrapper.find('.ant-page-header-back')).toHaveLength(0);
+  });
+
+  it('pageHeader do not has title', () => {
+    const routes = [
+      {
+        path: 'index',
+        breadcrumbName: 'First-level Menu',
+      },
+    ];
+    const wrapper = mount(<PageHeader breadcrumb={{ routes }}>test</PageHeader>);
+    expect(wrapper.find('.ant-page-header-heading-lef').exists()).toBeFalsy();
+    expect(wrapper.find('.ant-page-header-heading').exists()).toBeFalsy();
   });
 
   it('pageHeader should no contain back', () => {
@@ -100,5 +130,13 @@ describe('PageHeader', () => {
     );
 
     expect(render(wrapper)).toMatchSnapshot();
+  });
+
+  it('change container width', async () => {
+    const wrapper = mount(<PageHeader title="Page Title" extra="extra" />);
+    wrapper.triggerResize();
+    await Promise.resolve();
+    wrapper.update();
+    expect(wrapper.find('.ant-page-header').hasClass('ant-page-header-compact')).toBe(true);
   });
 });

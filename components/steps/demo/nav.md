@@ -31,7 +31,7 @@ class Demo extends React.Component {
   render() {
     const { current } = this.state;
     return (
-      <div>
+      <>
         <Steps
           type="navigation"
           size="small"
@@ -81,7 +81,7 @@ class Demo extends React.Component {
           <Step status="process" title="current process" />
           <Step status="wait" title="wait" disabled />
         </Steps>
-      </div>
+      </>
     );
   }
 }
@@ -90,6 +90,7 @@ ReactDOM.render(<Demo />, mountNode);
 ```
 
 ```css
+[data-theme='compact'] .site-navigation-steps,
 .site-navigation-steps {
   margin-bottom: 60px;
   box-shadow: 0px -1px 0 0 #e8e8e8 inset;

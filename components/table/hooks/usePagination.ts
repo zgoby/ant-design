@@ -1,12 +1,12 @@
 import { useState } from 'react';
-import { PaginationProps, PaginationConfig } from '../../pagination';
+import { PaginationProps } from '../../pagination';
 import { TablePaginationConfig } from '../interface';
 
 export const DEFAULT_PAGE_SIZE = 10;
 
 export function getPaginationParam(
-  pagination: PaginationConfig | boolean | undefined,
-  mergedPagination: PaginationConfig,
+  pagination: TablePaginationConfig | boolean | undefined,
+  mergedPagination: TablePaginationConfig,
 ) {
   const param: any = {
     current: mergedPagination.current,
@@ -25,6 +25,23 @@ export function getPaginationParam(
   return param;
 }
 
+function extendsObject<T extends Object>(...list: T[]) {
+  const result: T = {} as T;
+
+  list.forEach(obj => {
+    if (obj) {
+      Object.keys(obj).forEach(key => {
+        const val = (obj as any)[key];
+        if (val !== undefined) {
+          (result as any)[key] = val;
+        }
+      });
+    }
+  });
+
+  return result;
+}
+
 export default function usePagination(
   total: number,
   pagination: TablePaginationConfig | false | undefined,
@@ -33,60 +50,43 @@ export default function usePagination(
   const { total: paginationTotal = 0, ...paginationObj } =
     pagination && typeof pagination === 'object' ? pagination : {};
 
-  const [innerPagination, setInnerPagination] = useState<TablePaginationConfig>(() => {
-    return {
-      current: 'defaultCurrent' in paginationObj ? paginationObj.defaultCurrent : 1,
-      pageSize:
-        'defaultPageSize' in paginationObj ? paginationObj.defaultPageSize : DEFAULT_PAGE_SIZE,
-    };
-  });
+  const [innerPagination, setInnerPagination] = useState<{
+    current?: number;
+    pageSize?: number;
+  }>(() => ({
+    current: 'defaultCurrent' in paginationObj ? paginationObj.defaultCurrent : 1,
+    pageSize:
+      'defaultPageSize' in paginationObj ? paginationObj.defaultPageSize : DEFAULT_PAGE_SIZE,
+  }));
 
   // ============ Basic Pagination Config ============
-  const mergedPagination = {
-    ...innerPagination,
-    ...paginationObj,
-    total: paginationTotal > 0 ? paginationTotal : total,
-  };
+  const mergedPagination = extendsObject<Partial<TablePaginationConfig>>(
+    innerPagination,
+    paginationObj,
+    {
+      total: paginationTotal > 0 ? paginationTotal : total,
+    },
+  );
 
-  if (!paginationTotal) {
-    // Reset `current` if data length changed. Only reset when paginationObj do not have total
-    const maxPage = Math.ceil(total / mergedPagination.pageSize!);
-    if (maxPage < mergedPagination.current!) {
-      mergedPagination.current = 1;
-    }
+  // Reset `current` if data length or pageSize changed
+  const maxPage = Math.ceil((paginationTotal || total) / mergedPagination.pageSize!);
+  if (mergedPagination.current! > maxPage) {
+    mergedPagination.current = maxPage;
   }
 
-  const refreshPagination = (current: number = 1) => {
+  const refreshPagination = (current: number = 1, pageSize?: number) => {
     setInnerPagination({
-      ...mergedPagination,
       current,
+      pageSize: pageSize || mergedPagination.pageSize,
     });
   };
 
-  const onInternalChange: PaginationProps['onChange'] = (...args) => {
-    const [current] = args;
-    refreshPagination(current);
-
-    onChange(current, args[1] || mergedPagination.pageSize!);
-
-    if (pagination && pagination.onChange) {
-      pagination.onChange(...args);
+  const onInternalChange: PaginationProps['onChange'] = (current, pageSize) => {
+    if (pagination) {
+      pagination.onChange?.(current, pageSize);
     }
-  };
-
-  const onInternalShowSizeChange: PaginationProps['onShowSizeChange'] = (...args) => {
-    const [, pageSize] = args;
-    setInnerPagination({
-      ...mergedPagination,
-      current: 1,
-      pageSize,
-    });
-
-    onChange(1, pageSize);
-
-    if (pagination && pagination.onShowSizeChange) {
-      pagination.onShowSizeChange(...args);
-    }
+    refreshPagination(current, pageSize);
+    onChange(current, pageSize || mergedPagination?.pageSize!);
   };
 
   if (pagination === false) {
@@ -97,7 +97,6 @@ export default function usePagination(
     {
       ...mergedPagination,
       onChange: onInternalChange,
-      onShowSizeChange: onInternalShowSizeChange,
     },
     refreshPagination,
   ];

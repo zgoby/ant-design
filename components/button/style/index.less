@@ -19,24 +19,18 @@
   // Fixing https://github.com/ant-design/ant-design/issues/13214
   // It is a render problem of chrome, which is only happened in the codesandbox demo
   // 0.001px solution works and I don't why
-  line-height: @line-height-base;
-  .btn;
-  .btn-default;
+  line-height: @btn-line-height;
+  .btn();
+  .btn-default();
 
-  &-rtl {
-    direction: rtl;
-  }
-  // Make sure that the target of Button's click event always be `button`
-  // Ref: https://github.com/ant-design/ant-design/issues/7034
-  > i,
+  // Fix loading button animation
+  // https://github.com/ant-design/ant-design/issues/24323
   > span {
     display: inline-block;
-    transition: margin-left 0.3s @ease-in-out;
-    pointer-events: none;
   }
 
   &-primary {
-    .btn-primary;
+    .btn-primary();
 
     .@{btn-prefix-cls}-group &:not(:first-child):not(:last-child) {
       border-right-color: @btn-group-border;
@@ -61,57 +55,53 @@
     .@{btn-prefix-cls}-group & + & {
       border-left-color: @btn-group-border;
 
-      .@{btn-prefix-cls}-group-rtl& {
-        border-right-color: @btn-group-border;
-        border-left-color: @btn-default-border;
-      }
       &[disabled] {
         border-left-color: @btn-default-border;
-
-        .@{btn-prefix-cls}-group-rtl& {
-          border-right-color: @btn-default-border;
-          border-left-color: @btn-group-border;
-        }
       }
     }
   }
 
   &-ghost {
-    .btn-ghost;
+    .btn-ghost();
   }
 
   &-dashed {
-    .btn-dashed;
+    .btn-dashed();
   }
 
   // type="danger" will deprecated
   // use danger instead
   &-danger {
-    .btn-danger;
+    .btn-danger();
   }
 
   &-link {
-    .btn-link;
+    .btn-link();
+  }
+
+  &-text {
+    .btn-text();
   }
 
   &-dangerous {
-    .btn-danger-default;
+    .btn-danger-default();
   }
 
   &-dangerous&-primary {
-    .btn-danger;
+    .btn-danger();
   }
 
   &-dangerous&-link {
-    .btn-danger-link;
+    .btn-danger-link();
+  }
+
+  &-dangerous&-text {
+    .btn-danger-text();
   }
 
   &-icon-only {
     .btn-square(@btn-prefix-cls);
-
-    > i {
-      vertical-align: middle;
-    }
+    vertical-align: -1px;
   }
 
   &-round {
@@ -121,17 +111,16 @@
     }
   }
 
-  &-circle,
-  &-circle-outline {
+  &-circle {
     .btn-circle(@btn-prefix-cls);
   }
 
   &::before {
     position: absolute;
-    top: -1px;
-    right: -1px;
-    bottom: -1px;
-    left: -1px;
+    top: -@btn-border-width;
+    right: -@btn-border-width;
+    bottom: -@btn-border-width;
+    left: -@btn-border-width;
     z-index: 1;
     display: none;
     background: @component-background;
@@ -160,44 +149,27 @@
     &:not([disabled]) {
       pointer-events: none;
     }
-  }
 
-  &&-loading::before {
-    display: block;
-  }
-
-  &&-loading:not(&-circle):not(&-circle-outline):not(&-icon-only) {
-    padding-left: 29px;
-
-    .@{btn-prefix-cls}-rtl& {
-      padding-right: 29px;
-      padding-left: @padding-md - 1px;
-    }
-
-    .@{iconfont-css-prefix}:not(:last-child) {
-      margin-left: -14px;
-
-      .@{btn-prefix-cls}-rtl& {
-        margin-right: -14px;
-        margin-left: 0;
-      }
+    &::before {
+      display: block;
     }
   }
 
-  &-sm&-loading:not(&-circle):not(&-circle-outline):not(&-icon-only) {
-    padding-left: 24px;
-
-    .@{btn-prefix-cls}-rtl& {
-      padding-right: 24px;
-      padding-left: @padding-xs - 1px;
-    }
+  & > &-loading-icon {
+    transition: all 0.3s @ease-in-out;
 
     .@{iconfont-css-prefix} {
-      margin-left: -17px;
+      padding-right: @padding-xs;
+      animation: none;
+      // for smooth button padding transition
+      svg {
+        animation: loadingCircle 1s infinite linear;
+      }
+    }
 
-      .@{btn-prefix-cls}-rtl& {
-        margin-right: -17px;
-        margin-left: 0;
+    &:only-child {
+      .@{iconfont-css-prefix} {
+        padding-right: 0;
       }
     }
   }
@@ -215,12 +187,7 @@
   // To ensure that a space will be placed between character and `Icon`.
   > .@{iconfont-css-prefix} + span,
   > span + .@{iconfont-css-prefix} {
-    margin-left: 8px;
-
-    .@{btn-prefix-cls}-rtl& {
-      margin-right: 8px;
-      margin-left: 0;
-    }
+    margin-left: @margin-xs;
   }
 
   &-background-ghost {
@@ -245,12 +212,6 @@
     .button-variant-ghost(@btn-danger-border, transparent);
   }
 
-  &-background-ghost&-link {
-    .button-variant-ghost(@link-color; transparent);
-
-    color: @btn-link-ghost-color;
-  }
-
   &-two-chinese-chars::first-letter {
     letter-spacing: 0.34em;
   }
@@ -265,8 +226,12 @@
   }
 
   // https://github.com/ant-design/ant-design/issues/12681
+  // same method as Select
   &:empty {
-    vertical-align: top;
+    display: inline-block;
+    width: 0;
+    visibility: hidden;
+    content: '\a0';
   }
 }
 
@@ -284,3 +249,5 @@ a.@{btn-prefix-cls} {
     line-height: @btn-height-sm - 2px;
   }
 }
+
+@import './rtl';

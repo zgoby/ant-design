@@ -5,7 +5,7 @@
 @spin-dot-default: @text-color-secondary;
 
 .@{spin-prefix-cls} {
-  .reset-component;
+  .reset-component();
 
   position: absolute;
   display: none;
@@ -14,10 +14,6 @@
   vertical-align: middle;
   opacity: 0;
   transition: transform 0.3s @ease-in-out-circ;
-
-  &-rtl {
-    direction: rtl;
-  }
 
   &-spinning {
     position: static;
@@ -40,41 +36,41 @@
         position: absolute;
         top: 50%;
         left: 50%;
-        margin: -@spin-dot-size / 2;
+        margin: -(@spin-dot-size / 2);
       }
       .@{spin-prefix-cls}-text {
         position: absolute;
         top: 50%;
         width: 100%;
-        padding-top: (@spin-dot-size - @font-size-base) / 2 + 2px;
+        padding-top: ((@spin-dot-size - @font-size-base) / 2) + 2px;
         text-shadow: 0 1px 2px @shadow-color-inverse;
       }
       &.@{spin-prefix-cls}-show-text .@{spin-prefix-cls}-dot {
-        margin-top: -@spin-dot-size / 2 - 10px;
+        margin-top: -(@spin-dot-size / 2) - 10px;
       }
     }
 
     > div > .@{spin-prefix-cls}-sm {
       .@{spin-prefix-cls}-dot {
-        margin: -@spin-dot-size-sm / 2;
+        margin: -(@spin-dot-size-sm / 2);
       }
       .@{spin-prefix-cls}-text {
-        padding-top: (@spin-dot-size-sm - @font-size-base) / 2 + 2px;
+        padding-top: ((@spin-dot-size-sm - @font-size-base) / 2) + 2px;
       }
       &.@{spin-prefix-cls}-show-text .@{spin-prefix-cls}-dot {
-        margin-top: -@spin-dot-size-sm / 2 - 10px;
+        margin-top: -(@spin-dot-size-sm / 2) - 10px;
       }
     }
 
     > div > .@{spin-prefix-cls}-lg {
       .@{spin-prefix-cls}-dot {
-        margin: -@spin-dot-size-lg / 2;
+        margin: -(@spin-dot-size-lg / 2);
       }
       .@{spin-prefix-cls}-text {
-        padding-top: (@spin-dot-size-lg - @font-size-base) / 2 + 2px;
+        padding-top: ((@spin-dot-size-lg - @font-size-base) / 2) + 2px;
       }
       &.@{spin-prefix-cls}-show-text .@{spin-prefix-cls}-dot {
-        margin-top: -@spin-dot-size-lg / 2 - 10px;
+        margin-top: -(@spin-dot-size-lg / 2) - 10px;
       }
     }
   }
@@ -166,11 +162,6 @@
     &-spin {
       transform: rotate(45deg);
       animation: antRotate 1.2s infinite linear;
-
-      .@{spin-prefix-cls}-rtl & {
-        transform: rotate(-45deg);
-        animation-name: antRotateRtl;
-      }
     }
   }
 
@@ -222,8 +213,4 @@
   }
 }
 
-@keyframes antRotateRtl {
-  to {
-    transform: rotate(-405deg);
-  }
-}
+@import './rtl';

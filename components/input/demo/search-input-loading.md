@@ -19,12 +19,15 @@ import { Input } from 'antd';
 const { Search } = Input;
 
 ReactDOM.render(
-  <div>
-    <Search placeholder="input search loading deault" loading />
+  <>
+    <Search placeholder="input search loading default" loading />
     <br />
     <br />
     <Search placeholder="input search loading with enterButton" loading enterButton />
-  </div>,
+    <br />
+    <br />
+    <Search placeholder="input search text" enterButton="Search" size="large" loading />
+  </>,
   mountNode,
 );
 ```

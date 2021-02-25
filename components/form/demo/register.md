@@ -30,7 +30,6 @@ import {
 import { QuestionCircleOutlined } from '@ant-design/icons';
 
 const { Option } = Select;
-const AutoCompleteOption = AutoComplete.Option;
 
 const residences = [
   {
@@ -93,12 +92,8 @@ const tailFormItemLayout = {
 const RegistrationForm = () => {
   const [form] = Form.useForm();
 
-  const onFinish = values => {
+  const onFinish = (values: any) => {
     console.log('Received values of form: ', values);
-  };
-
-  const onFinishFailed = ({ errorFields }) => {
-    form.scrollToField(errorFields[0].name);
   };
 
   const prefixSelector = (
@@ -110,9 +105,9 @@ const RegistrationForm = () => {
     </Form.Item>
   );
 
-  const [autoCompleteResult, setAutoCompleteResult] = useState([]);
+  const [autoCompleteResult, setAutoCompleteResult] = useState<string[]>([]);
 
-  const onWebsiteChange = value => {
+  const onWebsiteChange = (value: string) => {
     if (!value) {
       setAutoCompleteResult([]);
     } else {
@@ -131,11 +126,11 @@ const RegistrationForm = () => {
       form={form}
       name="register"
       onFinish={onFinish}
-      onFinishFailed={onFinishFailed}
       initialValues={{
         residence: ['zhejiang', 'hangzhou', 'xihu'],
         prefix: '86',
       }}
+      scrollToFirstError
     >
       <Form.Item
         name="email"
@@ -179,11 +174,11 @@ const RegistrationForm = () => {
             message: 'Please confirm your password!',
           },
           ({ getFieldValue }) => ({
-            validator(rule, value) {
+            validator(_, value) {
               if (!value || getFieldValue('password') === value) {
                 return Promise.resolve();
               }
-              return Promise.reject('The two passwords that you entered do not match!');
+              return Promise.reject(new Error('The two passwords that you entered do not match!'));
             },
           }),
         ]}
@@ -251,7 +246,17 @@ const RegistrationForm = () => {
         </Row>
       </Form.Item>
 
-      <Form.Item name="agreement" valuePropName="checked" {...tailFormItemLayout}>
+      <Form.Item
+        name="agreement"
+        valuePropName="checked"
+        rules={[
+          {
+            validator: (_, value) =>
+              value ? Promise.resolve() : Promise.reject(new Error('Should accept agreement')),
+          },
+        ]}
+        {...tailFormItemLayout}
+      >
         <Checkbox>
           I have read the <a href="">agreement</a>
         </Checkbox>

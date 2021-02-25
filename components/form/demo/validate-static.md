@@ -87,7 +87,7 @@ ReactDOM.render(
     </Form.Item>
 
     <Form.Item label="Error" hasFeedback validateStatus="error">
-      <Select>
+      <Select allowClear>
         <Option value="1">Option 1</Option>
         <Option value="2">Option 2</Option>
         <Option value="3">Option 3</Option>
@@ -100,7 +100,7 @@ ReactDOM.render(
       validateStatus="validating"
       help="The information is being validated..."
     >
-      <Cascader options={[]} />
+      <Cascader options={[{ value: 'xx', label: 'xx' }]} allowClear />
     </Form.Item>
 
     <Form.Item label="inline" style={{ marginBottom: 0 }}>
@@ -111,7 +111,11 @@ ReactDOM.render(
       >
         <DatePicker />
       </Form.Item>
-      <span style={{ display: 'inline-block', width: '24px', textAlign: 'center' }}>-</span>
+      <span
+        style={{ display: 'inline-block', width: '24px', lineHeight: '32px', textAlign: 'center' }}
+      >
+        -
+      </span>
       <Form.Item style={{ display: 'inline-block', width: 'calc(50% - 12px)' }}>
         <DatePicker />
       </Form.Item>

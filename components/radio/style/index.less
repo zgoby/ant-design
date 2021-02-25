@@ -5,17 +5,15 @@
 @radio-group-prefix-cls: ~'@{radio-prefix-cls}-group';
 @radio-inner-prefix-cls: ~'@{radio-prefix-cls}-inner';
 @radio-duration: 0.3s;
-@radio-focused-outline: 3px solid fade(@radio-dot-color, 6%);
+@radio-focus-shadow: 0 0 0 3px fade(@radio-dot-color, 8%);
+@radio-button-focus-shadow: @radio-focus-shadow;
 
 .@{radio-group-prefix-cls} {
-  .reset-component;
+  .reset-component();
 
   display: inline-block;
+  font-size: 0;
   line-height: unset;
-
-  &-rtl {
-    direction: rtl;
-  }
 
   .@{ant-prefix}-badge-count {
     z-index: 1;
@@ -28,28 +26,24 @@
 
 // 一般状态
 .@{radio-prefix-cls}-wrapper {
-  .reset-component;
+  .reset-component();
 
   position: relative;
   display: inline-block;
-  margin-right: 8px;
+  margin-right: @radio-wrapper-margin-right;
   white-space: nowrap;
   cursor: pointer;
-
-  &-rtl {
-    margin-right: 0;
-    margin-left: 8px;
-  }
 }
 
 .@{radio-prefix-cls} {
-  .reset-component;
+  .reset-component();
 
   position: relative;
+  top: @radio-top;
   display: inline-block;
   line-height: 1;
   white-space: nowrap;
-  vertical-align: sub;
+  vertical-align: text-bottom;
   outline: none;
   cursor: pointer;
 
@@ -60,7 +54,7 @@
   }
 
   &-input:focus + .@{radio-inner-prefix-cls} {
-    box-shadow: 0 0 0 3px fade(@radio-dot-color, 8%);
+    box-shadow: @radio-focus-shadow;
   }
 
   &-checked::after {
@@ -84,11 +78,9 @@
 
   &-inner {
     &::after {
-      @radio-dot-size: @radio-size - 8px;
-
       position: absolute;
-      top: (@radio-size - @radio-dot-size) / 2 - 1px;
-      left: (@radio-size - @radio-dot-size) / 2 - 1px;
+      top: ((@radio-size - @radio-dot-size) / 2) - @radio-border-width;
+      left: ((@radio-size - @radio-dot-size) / 2) - @radio-border-width;
       display: table;
       width: @radio-dot-size;
       height: @radio-dot-size;
@@ -111,8 +103,8 @@
     background-color: @radio-button-bg;
     border-color: @border-color-base;
     border-style: solid;
-    border-width: 1px;
-    border-radius: 100px;
+    border-width: @radio-border-width;
+    border-radius: 50%;
     transition: all @radio-duration;
   }
 
@@ -141,6 +133,8 @@
 }
 
 .@{radio-prefix-cls}-disabled {
+  cursor: not-allowed;
+
   .@{radio-inner-prefix-cls} {
     background-color: @input-disabled-bg;
     border-color: @border-color-base !important;
@@ -172,25 +166,28 @@ span.@{radio-prefix-cls} + * {
   margin: 0;
   padding: 0 @padding-md - 1px;
   color: @radio-button-color;
+  font-size: @font-size-base;
   line-height: @btn-height-base - 2px;
   background: @radio-button-bg;
   border: @border-width-base @border-style-base @border-color-base;
   // strange align fix for chrome but works
   // https://gw.alipayobjects.com/zos/rmsportal/VFTfKXJuogBAXcvfAUWJ.gif
   border-top-width: @border-width-base + 0.02px;
-  border-left: 0;
+  border-left-width: 0;
   cursor: pointer;
-  transition: color 0.3s, background 0.3s, border-color 0.3s;
+  transition: color 0.3s, background 0.3s, border-color 0.3s, box-shadow 0.3s;
 
   a {
     color: @radio-button-color;
   }
 
   > .@{radio-prefix-cls}-button {
-    display: block;
-    width: 0;
-    height: 0;
-    margin-left: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
   }
 
   .@{radio-group-prefix-cls}-large & {
@@ -208,12 +205,15 @@ span.@{radio-prefix-cls} + * {
   &:not(:first-child) {
     &::before {
       position: absolute;
-      top: 0;
+      top: @border-width-base * -1;
       left: -1px;
       display: block;
+      box-sizing: content-box;
       width: 1px;
       height: 100%;
+      padding: @border-width-base 0;
       background-color: @border-color-base;
+      transition: background-color 0.3s;
       content: '';
     }
   }
@@ -221,19 +221,10 @@ span.@{radio-prefix-cls} + * {
   &:first-child {
     border-left: @border-width-base @border-style-base @border-color-base;
     border-radius: @border-radius-base 0 0 @border-radius-base;
-
-    .@{radio-prefix-cls}-button-wrapper-rtl& {
-      border-right: @border-width-base @border-style-base @border-color-base;
-      border-radius: 0 @border-radius-base @border-radius-base 0;
-    }
   }
 
   &:last-child {
     border-radius: 0 @border-radius-base @border-radius-base 0;
-
-    .@{radio-prefix-cls}-button-wrapper-rtl& {
-      border-radius: @border-radius-base 0 0 @border-radius-base;
-    }
   }
 
   &:first-child:last-child {
@@ -246,7 +237,7 @@ span.@{radio-prefix-cls} + * {
   }
 
   &:focus-within {
-    outline: @radio-focused-outline;
+    box-shadow: @radio-button-focus-shadow;
   }
 
   .@{radio-prefix-cls}-inner,
@@ -263,51 +254,52 @@ span.@{radio-prefix-cls} + * {
     color: @radio-dot-color;
     background: @radio-button-checked-bg;
     border-color: @radio-dot-color;
-    box-shadow: -1px 0 0 0 @radio-dot-color;
 
     &::before {
-      background-color: @radio-dot-color !important;
-      opacity: 0.1;
+      background-color: @radio-dot-color;
     }
 
     &:first-child {
       border-color: @radio-dot-color;
-      box-shadow: none !important;
     }
 
     &:hover {
       color: @radio-button-hover-color;
       border-color: @radio-button-hover-color;
-      box-shadow: -1px 0 0 0 @radio-button-hover-color;
+      &::before {
+        background-color: @radio-button-hover-color;
+      }
     }
 
     &:active {
       color: @radio-button-active-color;
       border-color: @radio-button-active-color;
-      box-shadow: -1px 0 0 0 @radio-button-active-color;
+      &::before {
+        background-color: @radio-button-active-color;
+      }
     }
 
     &:focus-within {
-      outline: @radio-focused-outline;
+      box-shadow: @radio-button-focus-shadow;
     }
   }
 
   .@{radio-group-prefix-cls}-solid &-checked:not(&-disabled) {
-    color: @radtio-solid-checked-color;
+    color: @radio-solid-checked-color;
     background: @radio-dot-color;
     border-color: @radio-dot-color;
     &:hover {
-      color: @radtio-solid-checked-color;
+      color: @radio-solid-checked-color;
       background: @radio-button-hover-color;
       border-color: @radio-button-hover-color;
     }
     &:active {
-      color: @radtio-solid-checked-color;
+      color: @radio-solid-checked-color;
       background: @radio-button-active-color;
       border-color: @radio-button-active-color;
     }
     &:focus-within {
-      outline: @radio-focused-outline;
+      box-shadow: @radio-button-focus-shadow;
     }
   }
 
@@ -325,10 +317,6 @@ span.@{radio-prefix-cls} + * {
     }
     &:first-child {
       border-left-color: @border-color-base;
-
-      .@{radio-prefix-cls}-button-wrapper-rtl& {
-        border-right-color: @border-color-base;
-      }
     }
   }
 
@@ -351,9 +339,4 @@ span.@{radio-prefix-cls} + * {
   }
 }
 
-// Firefox hack
-@supports (-moz-appearance: meterbar) and (background-blend-mode: difference, normal) {
-  .@{radio-prefix-cls} {
-    vertical-align: text-bottom;
-  }
-}
+@import './rtl';

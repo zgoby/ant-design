@@ -2,23 +2,27 @@
 declare module '*.svg' {
   import * as React from 'react';
 
-  export const ReactComponent: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
+  export const ReactComponent: React.FC<React.SVGProps<SVGSVGElement>>;
 
   const src: string;
   export default src;
 }
 
+declare module 'bisheng/collect';
+
 declare module 'bisheng/router';
 
-declare module 'rc-pagination/*';
+declare module 'react-github-button';
 
-declare module 'omit.js';
+declare module 'jsonml.js/*';
+
+declare module 'rc-pagination/*';
 
 declare module 'rc-animate*';
 
 declare module 'rc-util*';
 
-declare module 'css-animation*';
+declare module '@ant-design/css-animation*';
 
 declare module 'rc-checkbox';
 
@@ -34,32 +38,18 @@ declare module 'rc-input-number';
 
 declare module 'rc-collapse';
 
-declare module 'rc-notification';
-
 declare module 'rc-dialog';
 
 declare module 'rc-rate';
 
 declare module 'rc-queue-anim';
 
-declare module 'rc-slider';
-
-declare module 'rc-slider/lib/Slider';
-
-declare module 'rc-slider/lib/Range';
-
-declare module 'rc-slider/lib/Handle';
-
 declare module 'rc-steps';
 
 declare module 'rc-switch';
-
-declare module 'rc-upload';
 
 declare module '*.json' {
   const value: any;
   export const version: string;
   export default value;
 }
-
-declare module 'react-copy-to-clipboard';

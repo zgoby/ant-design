@@ -42,11 +42,11 @@ const extname = (url: string = '') => {
   return (/\.[^./\\]*$/.exec(filenameWithoutSuffix) || [''])[0];
 };
 
-const isImageFileType = (type: string): boolean => !!type && type.indexOf('image/') === 0;
+const isImageFileType = (type: string): boolean => type.indexOf('image/') === 0;
 
 export const isImageUrl = (file: UploadFile): boolean => {
-  if (isImageFileType(file.type)) {
-    return true;
+  if (file.type && !file.thumbUrl) {
+    return isImageFileType(file.type);
   }
   const url: string = (file.thumbUrl || file.url) as string;
   const extension = extname(url);
@@ -70,7 +70,7 @@ export const isImageUrl = (file: UploadFile): boolean => {
 const MEASURE_SIZE = 200;
 export function previewImage(file: File | Blob): Promise<string> {
   return new Promise(resolve => {
-    if (!isImageFileType(file.type)) {
+    if (!file.type || !isImageFileType(file.type)) {
       resolve('');
       return;
     }
@@ -90,7 +90,7 @@ export function previewImage(file: File | Blob): Promise<string> {
       let offsetX = 0;
       let offsetY = 0;
 
-      if (width < height) {
+      if (width > height) {
         drawHeight = height * (MEASURE_SIZE / width);
         offsetY = -(drawHeight - drawWidth) / 2;
       } else {

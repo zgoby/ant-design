@@ -57,9 +57,10 @@ export default class ColorPicker extends Component<ColorPickerProps> {
   render() {
     const { small, position, presetColors } = this.props;
     const { color, displayColorPicker } = this.state;
+    const width = small ? 80 : 120;
     const styles = {
       color: {
-        width: small ? '80px' : '120px',
+        width: `${width}px`,
         height: small ? '16px' : '24px',
         borderRadius: '2px',
         background: color,
@@ -74,7 +75,7 @@ export default class ColorPicker extends Component<ColorPickerProps> {
       } as React.CSSProperties,
       popover: {
         position: 'absolute',
-        zIndex: 2,
+        zIndex: 10,
       } as React.CSSProperties,
       cover: {
         position: 'fixed',
@@ -90,7 +91,7 @@ export default class ColorPicker extends Component<ColorPickerProps> {
     };
 
     if (position === 'top') {
-      styles.wrapper.transform = 'translateY(-100%)';
+      styles.wrapper.transform = `translate(calc(-100% + ${width + 8}px), -100%)`;
       styles.wrapper.paddingBottom = 8;
     }
 

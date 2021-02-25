@@ -5,9 +5,13 @@ exports[`renders ./components/descriptions/demo/basic.md correctly 1`] = `
   class="ant-descriptions"
 >
   <div
-    class="ant-descriptions-title"
+    class="ant-descriptions-header"
   >
-    User Info
+    <div
+      class="ant-descriptions-title"
+    >
+      User Info
+    </div>
   </div>
   <div
     class="ant-descriptions-view"
@@ -21,46 +25,58 @@ exports[`renders ./components/descriptions/demo/basic.md correctly 1`] = `
             class="ant-descriptions-item"
             colspan="1"
           >
-            <span
-              class="ant-descriptions-item-label ant-descriptions-item-colon"
+            <div
+              class="ant-descriptions-item-container"
             >
-              UserName
-            </span>
-            <span
-              class="ant-descriptions-item-content"
-            >
-              Zhou Maomao
-            </span>
+              <span
+                class="ant-descriptions-item-label"
+              >
+                UserName
+              </span>
+              <span
+                class="ant-descriptions-item-content"
+              >
+                Zhou Maomao
+              </span>
+            </div>
           </td>
           <td
             class="ant-descriptions-item"
             colspan="1"
           >
-            <span
-              class="ant-descriptions-item-label ant-descriptions-item-colon"
+            <div
+              class="ant-descriptions-item-container"
             >
-              Telephone
-            </span>
-            <span
-              class="ant-descriptions-item-content"
-            >
-              1810000000
-            </span>
+              <span
+                class="ant-descriptions-item-label"
+              >
+                Telephone
+              </span>
+              <span
+                class="ant-descriptions-item-content"
+              >
+                1810000000
+              </span>
+            </div>
           </td>
           <td
             class="ant-descriptions-item"
             colspan="1"
           >
-            <span
-              class="ant-descriptions-item-label ant-descriptions-item-colon"
+            <div
+              class="ant-descriptions-item-container"
             >
-              Live
-            </span>
-            <span
-              class="ant-descriptions-item-content"
-            >
-              Hangzhou, Zhejiang
-            </span>
+              <span
+                class="ant-descriptions-item-label"
+              >
+                Live
+              </span>
+              <span
+                class="ant-descriptions-item-content"
+              >
+                Hangzhou, Zhejiang
+              </span>
+            </div>
           </td>
         </tr>
         <tr
@@ -70,31 +86,39 @@ exports[`renders ./components/descriptions/demo/basic.md correctly 1`] = `
             class="ant-descriptions-item"
             colspan="1"
           >
-            <span
-              class="ant-descriptions-item-label ant-descriptions-item-colon"
+            <div
+              class="ant-descriptions-item-container"
             >
-              Remark
-            </span>
-            <span
-              class="ant-descriptions-item-content"
-            >
-              empty
-            </span>
+              <span
+                class="ant-descriptions-item-label"
+              >
+                Remark
+              </span>
+              <span
+                class="ant-descriptions-item-content"
+              >
+                empty
+              </span>
+            </div>
           </td>
           <td
             class="ant-descriptions-item"
             colspan="2"
           >
-            <span
-              class="ant-descriptions-item-label ant-descriptions-item-colon"
+            <div
+              class="ant-descriptions-item-container"
             >
-              Address
-            </span>
-            <span
-              class="ant-descriptions-item-content"
-            >
-              No. 18, Wantang Road, Xihu District, Hangzhou, Zhejiang, China
-            </span>
+              <span
+                class="ant-descriptions-item-label"
+              >
+                Address
+              </span>
+              <span
+                class="ant-descriptions-item-content"
+              >
+                No. 18, Wantang Road, Xihu District, Hangzhou, Zhejiang, China
+              </span>
+            </div>
           </td>
         </tr>
       </tbody>
@@ -108,9 +132,13 @@ exports[`renders ./components/descriptions/demo/border.md correctly 1`] = `
   class="ant-descriptions ant-descriptions-bordered"
 >
   <div
-    class="ant-descriptions-title"
+    class="ant-descriptions-header"
   >
-    User Info
+    <div
+      class="ant-descriptions-title"
+    >
+      User Info
+    </div>
   </div>
   <div
     class="ant-descriptions-view"
@@ -121,7 +149,8 @@ exports[`renders ./components/descriptions/demo/border.md correctly 1`] = `
           class="ant-descriptions-row"
         >
           <th
-            class="ant-descriptions-item-label ant-descriptions-item-colon"
+            class="ant-descriptions-item-label"
+            colspan="1"
           >
             Product
           </th>
@@ -132,7 +161,8 @@ exports[`renders ./components/descriptions/demo/border.md correctly 1`] = `
             Cloud Database
           </td>
           <th
-            class="ant-descriptions-item-label ant-descriptions-item-colon"
+            class="ant-descriptions-item-label"
+            colspan="1"
           >
             Billing Mode
           </th>
@@ -143,7 +173,8 @@ exports[`renders ./components/descriptions/demo/border.md correctly 1`] = `
             Prepaid
           </td>
           <th
-            class="ant-descriptions-item-label ant-descriptions-item-colon"
+            class="ant-descriptions-item-label"
+            colspan="1"
           >
             Automatic Renewal
           </th>
@@ -158,7 +189,8 @@ exports[`renders ./components/descriptions/demo/border.md correctly 1`] = `
           class="ant-descriptions-row"
         >
           <th
-            class="ant-descriptions-item-label ant-descriptions-item-colon"
+            class="ant-descriptions-item-label"
+            colspan="1"
           >
             Order time
           </th>
@@ -169,7 +201,8 @@ exports[`renders ./components/descriptions/demo/border.md correctly 1`] = `
             2018-04-24 18:00:00
           </td>
           <th
-            class="ant-descriptions-item-label ant-descriptions-item-colon"
+            class="ant-descriptions-item-label"
+            colspan="1"
           >
             Usage Time
           </th>
@@ -184,7 +217,8 @@ exports[`renders ./components/descriptions/demo/border.md correctly 1`] = `
           class="ant-descriptions-row"
         >
           <th
-            class="ant-descriptions-item-label ant-descriptions-item-colon"
+            class="ant-descriptions-item-label"
+            colspan="1"
           >
             Status
           </th>
@@ -210,7 +244,8 @@ exports[`renders ./components/descriptions/demo/border.md correctly 1`] = `
           class="ant-descriptions-row"
         >
           <th
-            class="ant-descriptions-item-label ant-descriptions-item-colon"
+            class="ant-descriptions-item-label"
+            colspan="1"
           >
             Negotiated Amount
           </th>
@@ -221,7 +256,8 @@ exports[`renders ./components/descriptions/demo/border.md correctly 1`] = `
             $80.00
           </td>
           <th
-            class="ant-descriptions-item-label ant-descriptions-item-colon"
+            class="ant-descriptions-item-label"
+            colspan="1"
           >
             Discount
           </th>
@@ -232,7 +268,8 @@ exports[`renders ./components/descriptions/demo/border.md correctly 1`] = `
             $20.00
           </td>
           <th
-            class="ant-descriptions-item-label ant-descriptions-item-colon"
+            class="ant-descriptions-item-label"
+            colspan="1"
           >
             Official Receipts
           </th>
@@ -247,7 +284,8 @@ exports[`renders ./components/descriptions/demo/border.md correctly 1`] = `
           class="ant-descriptions-row"
         >
           <th
-            class="ant-descriptions-item-label ant-descriptions-item-colon"
+            class="ant-descriptions-item-label"
+            colspan="1"
           >
             Config Info
           </th>
@@ -281,9 +319,13 @@ exports[`renders ./components/descriptions/demo/responsive.md correctly 1`] = `
     class="ant-descriptions ant-descriptions-bordered"
   >
     <div
-      class="ant-descriptions-title"
+      class="ant-descriptions-header"
     >
-      Responsive Descriptions
+      <div
+        class="ant-descriptions-title"
+      >
+        Responsive Descriptions
+      </div>
     </div>
     <div
       class="ant-descriptions-view"
@@ -294,7 +336,8 @@ exports[`renders ./components/descriptions/demo/responsive.md correctly 1`] = `
             class="ant-descriptions-row"
           >
             <th
-              class="ant-descriptions-item-label ant-descriptions-item-colon"
+              class="ant-descriptions-item-label"
+              colspan="1"
             >
               Product
             </th>
@@ -305,7 +348,8 @@ exports[`renders ./components/descriptions/demo/responsive.md correctly 1`] = `
               Cloud Database
             </td>
             <th
-              class="ant-descriptions-item-label ant-descriptions-item-colon"
+              class="ant-descriptions-item-label"
+              colspan="1"
             >
               Billing
             </th>
@@ -316,7 +360,8 @@ exports[`renders ./components/descriptions/demo/responsive.md correctly 1`] = `
               Prepaid
             </td>
             <th
-              class="ant-descriptions-item-label ant-descriptions-item-colon"
+              class="ant-descriptions-item-label"
+              colspan="1"
             >
               time
             </th>
@@ -331,7 +376,8 @@ exports[`renders ./components/descriptions/demo/responsive.md correctly 1`] = `
             class="ant-descriptions-row"
           >
             <th
-              class="ant-descriptions-item-label ant-descriptions-item-colon"
+              class="ant-descriptions-item-label"
+              colspan="1"
             >
               Amount
             </th>
@@ -342,7 +388,8 @@ exports[`renders ./components/descriptions/demo/responsive.md correctly 1`] = `
               $80.00
             </td>
             <th
-              class="ant-descriptions-item-label ant-descriptions-item-colon"
+              class="ant-descriptions-item-label"
+              colspan="1"
             >
               Discount
             </th>
@@ -353,7 +400,8 @@ exports[`renders ./components/descriptions/demo/responsive.md correctly 1`] = `
               $20.00
             </td>
             <th
-              class="ant-descriptions-item-label ant-descriptions-item-colon"
+              class="ant-descriptions-item-label"
+              colspan="1"
             >
               Official
             </th>
@@ -368,7 +416,8 @@ exports[`renders ./components/descriptions/demo/responsive.md correctly 1`] = `
             class="ant-descriptions-row"
           >
             <th
-              class="ant-descriptions-item-label ant-descriptions-item-colon"
+              class="ant-descriptions-item-label"
+              colspan="1"
             >
               Config Info
             </th>
@@ -466,9 +515,25 @@ exports[`renders ./components/descriptions/demo/size.md correctly 1`] = `
     class="ant-descriptions ant-descriptions-bordered"
   >
     <div
-      class="ant-descriptions-title"
+      class="ant-descriptions-header"
     >
-      Custom Size
+      <div
+        class="ant-descriptions-title"
+      >
+        Custom Size
+      </div>
+      <div
+        class="ant-descriptions-extra"
+      >
+        <button
+          class="ant-btn ant-btn-primary"
+          type="button"
+        >
+          <span>
+            Edit
+          </span>
+        </button>
+      </div>
     </div>
     <div
       class="ant-descriptions-view"
@@ -479,7 +544,8 @@ exports[`renders ./components/descriptions/demo/size.md correctly 1`] = `
             class="ant-descriptions-row"
           >
             <th
-              class="ant-descriptions-item-label ant-descriptions-item-colon"
+              class="ant-descriptions-item-label"
+              colspan="1"
             >
               Product
             </th>
@@ -490,7 +556,8 @@ exports[`renders ./components/descriptions/demo/size.md correctly 1`] = `
               Cloud Database
             </td>
             <th
-              class="ant-descriptions-item-label ant-descriptions-item-colon"
+              class="ant-descriptions-item-label"
+              colspan="1"
             >
               Billing
             </th>
@@ -501,7 +568,8 @@ exports[`renders ./components/descriptions/demo/size.md correctly 1`] = `
               Prepaid
             </td>
             <th
-              class="ant-descriptions-item-label ant-descriptions-item-colon"
+              class="ant-descriptions-item-label"
+              colspan="1"
             >
               time
             </th>
@@ -516,7 +584,8 @@ exports[`renders ./components/descriptions/demo/size.md correctly 1`] = `
             class="ant-descriptions-row"
           >
             <th
-              class="ant-descriptions-item-label ant-descriptions-item-colon"
+              class="ant-descriptions-item-label"
+              colspan="1"
             >
               Amount
             </th>
@@ -527,7 +596,8 @@ exports[`renders ./components/descriptions/demo/size.md correctly 1`] = `
               $80.00
             </td>
             <th
-              class="ant-descriptions-item-label ant-descriptions-item-colon"
+              class="ant-descriptions-item-label"
+              colspan="1"
             >
               Discount
             </th>
@@ -538,7 +608,8 @@ exports[`renders ./components/descriptions/demo/size.md correctly 1`] = `
               $20.00
             </td>
             <th
-              class="ant-descriptions-item-label ant-descriptions-item-colon"
+              class="ant-descriptions-item-label"
+              colspan="1"
             >
               Official
             </th>
@@ -553,7 +624,8 @@ exports[`renders ./components/descriptions/demo/size.md correctly 1`] = `
             class="ant-descriptions-row"
           >
             <th
-              class="ant-descriptions-item-label ant-descriptions-item-colon"
+              class="ant-descriptions-item-label"
+              colspan="1"
             >
               Config Info
             </th>
@@ -585,9 +657,25 @@ exports[`renders ./components/descriptions/demo/size.md correctly 1`] = `
     class="ant-descriptions"
   >
     <div
-      class="ant-descriptions-title"
+      class="ant-descriptions-header"
     >
-      Custom Size
+      <div
+        class="ant-descriptions-title"
+      >
+        Custom Size
+      </div>
+      <div
+        class="ant-descriptions-extra"
+      >
+        <button
+          class="ant-btn ant-btn-primary"
+          type="button"
+        >
+          <span>
+            Edit
+          </span>
+        </button>
+      </div>
     </div>
     <div
       class="ant-descriptions-view"
@@ -601,46 +689,58 @@ exports[`renders ./components/descriptions/demo/size.md correctly 1`] = `
               class="ant-descriptions-item"
               colspan="1"
             >
-              <span
-                class="ant-descriptions-item-label ant-descriptions-item-colon"
+              <div
+                class="ant-descriptions-item-container"
               >
-                Product
-              </span>
-              <span
-                class="ant-descriptions-item-content"
-              >
-                Cloud Database
-              </span>
+                <span
+                  class="ant-descriptions-item-label"
+                >
+                  Product
+                </span>
+                <span
+                  class="ant-descriptions-item-content"
+                >
+                  Cloud Database
+                </span>
+              </div>
             </td>
             <td
               class="ant-descriptions-item"
               colspan="1"
             >
-              <span
-                class="ant-descriptions-item-label ant-descriptions-item-colon"
+              <div
+                class="ant-descriptions-item-container"
               >
-                Billing
-              </span>
-              <span
-                class="ant-descriptions-item-content"
-              >
-                Prepaid
-              </span>
+                <span
+                  class="ant-descriptions-item-label"
+                >
+                  Billing
+                </span>
+                <span
+                  class="ant-descriptions-item-content"
+                >
+                  Prepaid
+                </span>
+              </div>
             </td>
             <td
               class="ant-descriptions-item"
               colspan="1"
             >
-              <span
-                class="ant-descriptions-item-label ant-descriptions-item-colon"
+              <div
+                class="ant-descriptions-item-container"
               >
-                time
-              </span>
-              <span
-                class="ant-descriptions-item-content"
-              >
-                18:00:00
-              </span>
+                <span
+                  class="ant-descriptions-item-label"
+                >
+                  time
+                </span>
+                <span
+                  class="ant-descriptions-item-content"
+                >
+                  18:00:00
+                </span>
+              </div>
             </td>
           </tr>
           <tr
@@ -650,46 +750,58 @@ exports[`renders ./components/descriptions/demo/size.md correctly 1`] = `
               class="ant-descriptions-item"
               colspan="1"
             >
-              <span
-                class="ant-descriptions-item-label ant-descriptions-item-colon"
+              <div
+                class="ant-descriptions-item-container"
               >
-                Amount
-              </span>
-              <span
-                class="ant-descriptions-item-content"
-              >
-                $80.00
-              </span>
+                <span
+                  class="ant-descriptions-item-label"
+                >
+                  Amount
+                </span>
+                <span
+                  class="ant-descriptions-item-content"
+                >
+                  $80.00
+                </span>
+              </div>
             </td>
             <td
               class="ant-descriptions-item"
               colspan="1"
             >
-              <span
-                class="ant-descriptions-item-label ant-descriptions-item-colon"
+              <div
+                class="ant-descriptions-item-container"
               >
-                Discount
-              </span>
-              <span
-                class="ant-descriptions-item-content"
-              >
-                $20.00
-              </span>
+                <span
+                  class="ant-descriptions-item-label"
+                >
+                  Discount
+                </span>
+                <span
+                  class="ant-descriptions-item-content"
+                >
+                  $20.00
+                </span>
+              </div>
             </td>
             <td
               class="ant-descriptions-item"
               colspan="1"
             >
-              <span
-                class="ant-descriptions-item-label ant-descriptions-item-colon"
+              <div
+                class="ant-descriptions-item-container"
               >
-                Official
-              </span>
-              <span
-                class="ant-descriptions-item-content"
-              >
-                $60.00
-              </span>
+                <span
+                  class="ant-descriptions-item-label"
+                >
+                  Official
+                </span>
+                <span
+                  class="ant-descriptions-item-content"
+                >
+                  $60.00
+                </span>
+              </div>
             </td>
           </tr>
         </tbody>
@@ -699,14 +811,329 @@ exports[`renders ./components/descriptions/demo/size.md correctly 1`] = `
 </div>
 `;
 
-exports[`renders ./components/descriptions/demo/vertical.md correctly 1`] = `
+exports[`renders ./components/descriptions/demo/style.md correctly 1`] = `
+Array [
+  <div
+    class="ant-descriptions"
+  >
+    <div
+      class="ant-descriptions-header"
+    >
+      <div
+        class="ant-descriptions-title"
+      >
+        User Info
+      </div>
+    </div>
+    <div
+      class="ant-descriptions-view"
+    >
+      <table>
+        <tbody>
+          <tr
+            class="ant-descriptions-row"
+          >
+            <td
+              class="ant-descriptions-item"
+              colspan="1"
+            >
+              <div
+                class="ant-descriptions-item-container"
+              >
+                <span
+                  class="ant-descriptions-item-label"
+                  style="background:red"
+                >
+                  Product
+                </span>
+                <span
+                  class="ant-descriptions-item-content"
+                  style="background:green"
+                >
+                  Cloud Database
+                </span>
+              </div>
+            </td>
+            <td
+              class="ant-descriptions-item"
+              colspan="1"
+            >
+              <div
+                class="ant-descriptions-item-container"
+              >
+                <span
+                  class="ant-descriptions-item-label"
+                >
+                  Billing Mode
+                </span>
+                <span
+                  class="ant-descriptions-item-content"
+                >
+                  Prepaid
+                </span>
+              </div>
+            </td>
+            <td
+              class="ant-descriptions-item"
+              colspan="1"
+            >
+              <div
+                class="ant-descriptions-item-container"
+              >
+                <span
+                  class="ant-descriptions-item-label"
+                >
+                  Automatic Renewal
+                </span>
+                <span
+                  class="ant-descriptions-item-content"
+                >
+                  YES
+                </span>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>,
+  <div
+    class="ant-descriptions ant-descriptions-bordered"
+  >
+    <div
+      class="ant-descriptions-header"
+    >
+      <div
+        class="ant-descriptions-title"
+      >
+        User Info
+      </div>
+    </div>
+    <div
+      class="ant-descriptions-view"
+    >
+      <table>
+        <tbody>
+          <tr
+            class="ant-descriptions-row"
+          >
+            <th
+              class="ant-descriptions-item-label"
+              colspan="1"
+              style="background:red"
+            >
+              Product
+            </th>
+            <td
+              class="ant-descriptions-item-content"
+              colspan="1"
+              style="background:green"
+            >
+              Cloud Database
+            </td>
+            <th
+              class="ant-descriptions-item-label"
+              colspan="1"
+            >
+              Billing Mode
+            </th>
+            <td
+              class="ant-descriptions-item-content"
+              colspan="1"
+            >
+              Prepaid
+            </td>
+            <th
+              class="ant-descriptions-item-label"
+              colspan="1"
+            >
+              Automatic Renewal
+            </th>
+            <td
+              class="ant-descriptions-item-content"
+              colspan="1"
+            >
+              YES
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>,
+  <div
+    class="ant-divider ant-divider-horizontal"
+    role="separator"
+  />,
+  <div
+    class="ant-descriptions"
+  >
+    <div
+      class="ant-descriptions-header"
+    >
+      <div
+        class="ant-descriptions-title"
+      >
+        Root style
+      </div>
+    </div>
+    <div
+      class="ant-descriptions-view"
+    >
+      <table>
+        <tbody>
+          <tr
+            class="ant-descriptions-row"
+          >
+            <td
+              class="ant-descriptions-item"
+              colspan="1"
+            >
+              <div
+                class="ant-descriptions-item-container"
+              >
+                <span
+                  class="ant-descriptions-item-label"
+                  style="background:red"
+                >
+                  Product
+                </span>
+                <span
+                  class="ant-descriptions-item-content"
+                  style="background:green"
+                >
+                  Cloud Database
+                </span>
+              </div>
+            </td>
+            <td
+              class="ant-descriptions-item"
+              colspan="1"
+            >
+              <div
+                class="ant-descriptions-item-container"
+              >
+                <span
+                  class="ant-descriptions-item-label"
+                  style="background:red"
+                >
+                  Billing Mode
+                </span>
+                <span
+                  class="ant-descriptions-item-content"
+                  style="background:green"
+                >
+                  Prepaid
+                </span>
+              </div>
+            </td>
+            <td
+              class="ant-descriptions-item"
+              colspan="1"
+            >
+              <div
+                class="ant-descriptions-item-container"
+              >
+                <span
+                  class="ant-descriptions-item-label"
+                  style="background:red;color:orange"
+                >
+                  Automatic Renewal
+                </span>
+                <span
+                  class="ant-descriptions-item-content"
+                  style="background:green;color:blue"
+                >
+                  YES
+                </span>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>,
+  <div
+    class="ant-descriptions ant-descriptions-bordered"
+  >
+    <div
+      class="ant-descriptions-header"
+    >
+      <div
+        class="ant-descriptions-title"
+      >
+        Root style
+      </div>
+    </div>
+    <div
+      class="ant-descriptions-view"
+    >
+      <table>
+        <tbody>
+          <tr
+            class="ant-descriptions-row"
+          >
+            <th
+              class="ant-descriptions-item-label"
+              colspan="1"
+              style="background:red"
+            >
+              Product
+            </th>
+            <td
+              class="ant-descriptions-item-content"
+              colspan="1"
+              style="background:green"
+            >
+              Cloud Database
+            </td>
+            <th
+              class="ant-descriptions-item-label"
+              colspan="1"
+              style="background:red"
+            >
+              Billing Mode
+            </th>
+            <td
+              class="ant-descriptions-item-content"
+              colspan="1"
+              style="background:green"
+            >
+              Prepaid
+            </td>
+            <th
+              class="ant-descriptions-item-label"
+              colspan="1"
+              style="background:red;color:orange"
+            >
+              Automatic Renewal
+            </th>
+            <td
+              class="ant-descriptions-item-content"
+              colspan="1"
+              style="background:green;color:blue"
+            >
+              YES
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>,
+]
+`;
+
+exports[`renders ./components/descriptions/demo/text.md correctly 1`] = `
 <div
   class="ant-descriptions"
 >
   <div
-    class="ant-descriptions-title"
+    class="ant-descriptions-header"
   >
-    User Info
+    <div
+      class="ant-descriptions-title"
+    >
+      User Info
+    </div>
   </div>
   <div
     class="ant-descriptions-view"
@@ -720,31 +1147,43 @@ exports[`renders ./components/descriptions/demo/vertical.md correctly 1`] = `
             class="ant-descriptions-item"
             colspan="1"
           >
-            <span
-              class="ant-descriptions-item-label ant-descriptions-item-colon"
+            <div
+              class="ant-descriptions-item-container"
             >
-              UserName
-            </span>
+              <span
+                class="ant-descriptions-item-label"
+              >
+                Product
+              </span>
+              <span
+                class="ant-descriptions-item-content"
+              >
+                Cloud Database
+              </span>
+            </div>
           </td>
           <td
             class="ant-descriptions-item"
             colspan="1"
           >
-            <span
-              class="ant-descriptions-item-label ant-descriptions-item-colon"
+            <div
+              class="ant-descriptions-item-container"
             >
-              Telephone
-            </span>
-          </td>
-          <td
-            class="ant-descriptions-item"
-            colspan="1"
-          >
-            <span
-              class="ant-descriptions-item-label ant-descriptions-item-colon"
-            >
-              Live
-            </span>
+              <span
+                class="ant-descriptions-item-label"
+              >
+                <div
+                  style="display:flex"
+                >
+                  Billing Mode
+                </div>
+              </span>
+              <span
+                class="ant-descriptions-item-content"
+              >
+                Prepaid
+              </span>
+            </div>
           </td>
         </tr>
         <tr
@@ -754,31 +1193,39 @@ exports[`renders ./components/descriptions/demo/vertical.md correctly 1`] = `
             class="ant-descriptions-item"
             colspan="1"
           >
-            <span
-              class="ant-descriptions-item-content"
+            <div
+              class="ant-descriptions-item-container"
             >
-              Zhou Maomao
-            </span>
+              <span
+                class="ant-descriptions-item-label"
+              >
+                Automatic Renewal
+              </span>
+              <span
+                class="ant-descriptions-item-content"
+              >
+                YES
+              </span>
+            </div>
           </td>
           <td
             class="ant-descriptions-item"
             colspan="1"
           >
-            <span
-              class="ant-descriptions-item-content"
+            <div
+              class="ant-descriptions-item-container"
             >
-              1810000000
-            </span>
-          </td>
-          <td
-            class="ant-descriptions-item"
-            colspan="1"
-          >
-            <span
-              class="ant-descriptions-item-content"
-            >
-              Hangzhou, Zhejiang
-            </span>
+              <span
+                class="ant-descriptions-item-label"
+              >
+                Order time
+              </span>
+              <span
+                class="ant-descriptions-item-content"
+              >
+                2018-04-24 18:00:00
+              </span>
+            </div>
           </td>
         </tr>
         <tr
@@ -788,21 +1235,20 @@ exports[`renders ./components/descriptions/demo/vertical.md correctly 1`] = `
             class="ant-descriptions-item"
             colspan="2"
           >
-            <span
-              class="ant-descriptions-item-label ant-descriptions-item-colon"
+            <div
+              class="ant-descriptions-item-container"
             >
-              Address
-            </span>
-          </td>
-          <td
-            class="ant-descriptions-item"
-            colspan="1"
-          >
-            <span
-              class="ant-descriptions-item-label ant-descriptions-item-colon"
-            >
-              Remark
-            </span>
+              <span
+                class="ant-descriptions-item-label"
+              >
+                Usage Time
+              </span>
+              <span
+                class="ant-descriptions-item-content"
+              >
+                2019-04-24 18:00:00
+              </span>
+            </div>
           </td>
         </tr>
         <tr
@@ -812,21 +1258,441 @@ exports[`renders ./components/descriptions/demo/vertical.md correctly 1`] = `
             class="ant-descriptions-item"
             colspan="2"
           >
-            <span
-              class="ant-descriptions-item-content"
+            <div
+              class="ant-descriptions-item-container"
             >
-              No. 18, Wantang Road, Xihu District, Hangzhou, Zhejiang, China
-            </span>
+              <span
+                class="ant-descriptions-item-label"
+              >
+                Status
+              </span>
+              <span
+                class="ant-descriptions-item-content"
+              >
+                <span
+                  class="ant-badge ant-badge-status ant-badge-not-a-wrapper"
+                >
+                  <span
+                    class="ant-badge-status-dot ant-badge-status-processing"
+                  />
+                  <span
+                    class="ant-badge-status-text"
+                  >
+                    Running
+                  </span>
+                </span>
+              </span>
+            </div>
+          </td>
+        </tr>
+        <tr
+          class="ant-descriptions-row"
+        >
+          <td
+            class="ant-descriptions-item"
+            colspan="1"
+          >
+            <div
+              class="ant-descriptions-item-container"
+            >
+              <span
+                class="ant-descriptions-item-label"
+              >
+                Negotiated Amount
+              </span>
+              <span
+                class="ant-descriptions-item-content"
+              >
+                $80.00
+              </span>
+            </div>
           </td>
           <td
             class="ant-descriptions-item"
             colspan="1"
           >
-            <span
-              class="ant-descriptions-item-content"
+            <div
+              class="ant-descriptions-item-container"
             >
-              empty
-            </span>
+              <span
+                class="ant-descriptions-item-label"
+              >
+                Discount
+              </span>
+              <span
+                class="ant-descriptions-item-content"
+              >
+                $20.00
+              </span>
+            </div>
+          </td>
+        </tr>
+        <tr
+          class="ant-descriptions-row"
+        >
+          <td
+            class="ant-descriptions-item"
+            colspan="1"
+          >
+            <div
+              class="ant-descriptions-item-container"
+            >
+              <span
+                class="ant-descriptions-item-label"
+              >
+                Official Receipts
+              </span>
+              <span
+                class="ant-descriptions-item-content"
+              >
+                $60.00
+              </span>
+            </div>
+          </td>
+          <td
+            class="ant-descriptions-item"
+            colspan="1"
+          >
+            <div
+              class="ant-descriptions-item-container"
+            >
+              <span
+                class="ant-descriptions-item-label"
+              >
+                Config Info
+              </span>
+              <span
+                class="ant-descriptions-item-content"
+              >
+                Data disk type: MongoDB
+                <br />
+                Database version: 3.4
+                <br />
+                Package: dds.mongo.mid
+                <br />
+                Storage space: 10 GB
+                <br />
+                Replication factor: 3
+                <br />
+                Region: East China 1
+                <br />
+              </span>
+            </div>
+          </td>
+        </tr>
+        <tr
+          class="ant-descriptions-row"
+        >
+          <td
+            class="ant-descriptions-item"
+            colspan="1"
+          >
+            <div
+              class="ant-descriptions-item-container"
+            >
+              <span
+                class="ant-descriptions-item-label"
+              >
+                Official Receipts
+              </span>
+              <span
+                class="ant-descriptions-item-content"
+              >
+                $60.00
+              </span>
+            </div>
+          </td>
+          <td
+            class="ant-descriptions-item"
+            colspan="1"
+          >
+            <div
+              class="ant-descriptions-item-container"
+            >
+              <span
+                class="ant-descriptions-item-label"
+              >
+                Config Info
+              </span>
+              <span
+                class="ant-descriptions-item-content"
+              >
+                <div
+                  class="ant-table-wrapper"
+                >
+                  <div
+                    class="ant-spin-nested-loading"
+                  >
+                    <div
+                      class="ant-spin-container"
+                    >
+                      <div
+                        class="ant-table ant-table-small"
+                      >
+                        <div
+                          class="ant-table-container"
+                        >
+                          <div
+                            class="ant-table-content"
+                          >
+                            <table
+                              style="table-layout:auto"
+                            >
+                              <colgroup />
+                              <thead
+                                class="ant-table-thead"
+                              >
+                                <tr>
+                                  <th
+                                    class="ant-table-cell"
+                                  >
+                                    姓名
+                                  </th>
+                                  <th
+                                    class="ant-table-cell"
+                                  >
+                                    年龄
+                                  </th>
+                                  <th
+                                    class="ant-table-cell"
+                                  >
+                                    住址
+                                  </th>
+                                </tr>
+                              </thead>
+                              <tbody
+                                class="ant-table-tbody"
+                              >
+                                <tr
+                                  class="ant-table-row ant-table-row-level-0"
+                                  data-row-key="1"
+                                >
+                                  <td
+                                    class="ant-table-cell"
+                                  >
+                                    胡彦斌
+                                  </td>
+                                  <td
+                                    class="ant-table-cell"
+                                  >
+                                    32
+                                  </td>
+                                  <td
+                                    class="ant-table-cell"
+                                  >
+                                    西湖区湖底公园1号
+                                  </td>
+                                </tr>
+                                <tr
+                                  class="ant-table-row ant-table-row-level-0"
+                                  data-row-key="2"
+                                >
+                                  <td
+                                    class="ant-table-cell"
+                                  >
+                                    胡彦祖
+                                  </td>
+                                  <td
+                                    class="ant-table-cell"
+                                  >
+                                    42
+                                  </td>
+                                  <td
+                                    class="ant-table-cell"
+                                  >
+                                    西湖区湖底公园1号
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </span>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+`;
+
+exports[`renders ./components/descriptions/demo/vertical.md correctly 1`] = `
+<div
+  class="ant-descriptions"
+>
+  <div
+    class="ant-descriptions-header"
+  >
+    <div
+      class="ant-descriptions-title"
+    >
+      User Info
+    </div>
+  </div>
+  <div
+    class="ant-descriptions-view"
+  >
+    <table>
+      <tbody>
+        <tr
+          class="ant-descriptions-row"
+        >
+          <th
+            class="ant-descriptions-item"
+            colspan="1"
+          >
+            <div
+              class="ant-descriptions-item-container"
+            >
+              <span
+                class="ant-descriptions-item-label"
+              >
+                UserName
+              </span>
+            </div>
+          </th>
+          <th
+            class="ant-descriptions-item"
+            colspan="1"
+          >
+            <div
+              class="ant-descriptions-item-container"
+            >
+              <span
+                class="ant-descriptions-item-label"
+              >
+                Telephone
+              </span>
+            </div>
+          </th>
+          <th
+            class="ant-descriptions-item"
+            colspan="1"
+          >
+            <div
+              class="ant-descriptions-item-container"
+            >
+              <span
+                class="ant-descriptions-item-label"
+              >
+                Live
+              </span>
+            </div>
+          </th>
+        </tr>
+        <tr
+          class="ant-descriptions-row"
+        >
+          <td
+            class="ant-descriptions-item"
+            colspan="1"
+          >
+            <div
+              class="ant-descriptions-item-container"
+            >
+              <span
+                class="ant-descriptions-item-content"
+              >
+                Zhou Maomao
+              </span>
+            </div>
+          </td>
+          <td
+            class="ant-descriptions-item"
+            colspan="1"
+          >
+            <div
+              class="ant-descriptions-item-container"
+            >
+              <span
+                class="ant-descriptions-item-content"
+              >
+                1810000000
+              </span>
+            </div>
+          </td>
+          <td
+            class="ant-descriptions-item"
+            colspan="1"
+          >
+            <div
+              class="ant-descriptions-item-container"
+            >
+              <span
+                class="ant-descriptions-item-content"
+              >
+                Hangzhou, Zhejiang
+              </span>
+            </div>
+          </td>
+        </tr>
+        <tr
+          class="ant-descriptions-row"
+        >
+          <th
+            class="ant-descriptions-item"
+            colspan="2"
+          >
+            <div
+              class="ant-descriptions-item-container"
+            >
+              <span
+                class="ant-descriptions-item-label"
+              >
+                Address
+              </span>
+            </div>
+          </th>
+          <th
+            class="ant-descriptions-item"
+            colspan="1"
+          >
+            <div
+              class="ant-descriptions-item-container"
+            >
+              <span
+                class="ant-descriptions-item-label"
+              >
+                Remark
+              </span>
+            </div>
+          </th>
+        </tr>
+        <tr
+          class="ant-descriptions-row"
+        >
+          <td
+            class="ant-descriptions-item"
+            colspan="2"
+          >
+            <div
+              class="ant-descriptions-item-container"
+            >
+              <span
+                class="ant-descriptions-item-content"
+              >
+                No. 18, Wantang Road, Xihu District, Hangzhou, Zhejiang, China
+              </span>
+            </div>
+          </td>
+          <td
+            class="ant-descriptions-item"
+            colspan="1"
+          >
+            <div
+              class="ant-descriptions-item-container"
+            >
+              <span
+                class="ant-descriptions-item-content"
+              >
+                empty
+              </span>
+            </div>
           </td>
         </tr>
       </tbody>
@@ -840,9 +1706,13 @@ exports[`renders ./components/descriptions/demo/vertical-border.md correctly 1`]
   class="ant-descriptions ant-descriptions-bordered"
 >
   <div
-    class="ant-descriptions-title"
+    class="ant-descriptions-header"
   >
-    User Info
+    <div
+      class="ant-descriptions-title"
+    >
+      User Info
+    </div>
   </div>
   <div
     class="ant-descriptions-view"
@@ -853,19 +1723,19 @@ exports[`renders ./components/descriptions/demo/vertical-border.md correctly 1`]
           class="ant-descriptions-row"
         >
           <th
-            class="ant-descriptions-item-label ant-descriptions-item-colon"
+            class="ant-descriptions-item-label"
             colspan="1"
           >
             Product
           </th>
           <th
-            class="ant-descriptions-item-label ant-descriptions-item-colon"
+            class="ant-descriptions-item-label"
             colspan="1"
           >
             Billing Mode
           </th>
           <th
-            class="ant-descriptions-item-label ant-descriptions-item-colon"
+            class="ant-descriptions-item-label"
             colspan="1"
           >
             Automatic Renewal
@@ -897,14 +1767,14 @@ exports[`renders ./components/descriptions/demo/vertical-border.md correctly 1`]
           class="ant-descriptions-row"
         >
           <th
-            class="ant-descriptions-item-label ant-descriptions-item-colon"
+            class="ant-descriptions-item-label"
             colspan="1"
           >
             Order time
           </th>
           <th
-            class="ant-descriptions-item-label ant-descriptions-item-colon"
-            colspan="3"
+            class="ant-descriptions-item-label"
+            colspan="2"
           >
             Usage Time
           </th>
@@ -920,7 +1790,7 @@ exports[`renders ./components/descriptions/demo/vertical-border.md correctly 1`]
           </td>
           <td
             class="ant-descriptions-item-content"
-            colspan="3"
+            colspan="2"
           >
             2019-04-24 18:00:00
           </td>
@@ -929,8 +1799,8 @@ exports[`renders ./components/descriptions/demo/vertical-border.md correctly 1`]
           class="ant-descriptions-row"
         >
           <th
-            class="ant-descriptions-item-label ant-descriptions-item-colon"
-            colspan="5"
+            class="ant-descriptions-item-label"
+            colspan="3"
           >
             Status
           </th>
@@ -940,7 +1810,7 @@ exports[`renders ./components/descriptions/demo/vertical-border.md correctly 1`]
         >
           <td
             class="ant-descriptions-item-content"
-            colspan="5"
+            colspan="3"
           >
             <span
               class="ant-badge ant-badge-status ant-badge-not-a-wrapper"
@@ -960,19 +1830,19 @@ exports[`renders ./components/descriptions/demo/vertical-border.md correctly 1`]
           class="ant-descriptions-row"
         >
           <th
-            class="ant-descriptions-item-label ant-descriptions-item-colon"
+            class="ant-descriptions-item-label"
             colspan="1"
           >
             Negotiated Amount
           </th>
           <th
-            class="ant-descriptions-item-label ant-descriptions-item-colon"
+            class="ant-descriptions-item-label"
             colspan="1"
           >
             Discount
           </th>
           <th
-            class="ant-descriptions-item-label ant-descriptions-item-colon"
+            class="ant-descriptions-item-label"
             colspan="1"
           >
             Official Receipts
@@ -1004,8 +1874,8 @@ exports[`renders ./components/descriptions/demo/vertical-border.md correctly 1`]
           class="ant-descriptions-row"
         >
           <th
-            class="ant-descriptions-item-label ant-descriptions-item-colon"
-            colspan="5"
+            class="ant-descriptions-item-label"
+            colspan="3"
           >
             Config Info
           </th>
@@ -1015,7 +1885,7 @@ exports[`renders ./components/descriptions/demo/vertical-border.md correctly 1`]
         >
           <td
             class="ant-descriptions-item-content"
-            colspan="5"
+            colspan="3"
           >
             Data disk type: MongoDB
             <br />

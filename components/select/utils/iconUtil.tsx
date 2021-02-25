@@ -1,12 +1,10 @@
-import React from 'react';
-import {
-  DownOutlined,
-  LoadingOutlined,
-  CheckOutlined,
-  CloseOutlined,
-  CloseCircleFilled,
-  SearchOutlined,
-} from '@ant-design/icons';
+import * as React from 'react';
+import DownOutlined from '@ant-design/icons/DownOutlined';
+import LoadingOutlined from '@ant-design/icons/LoadingOutlined';
+import CheckOutlined from '@ant-design/icons/CheckOutlined';
+import CloseOutlined from '@ant-design/icons/CloseOutlined';
+import CloseCircleFilled from '@ant-design/icons/CloseCircleFilled';
+import SearchOutlined from '@ant-design/icons/SearchOutlined';
 
 export default function getIcons({
   suffixIcon,
@@ -15,6 +13,7 @@ export default function getIcons({
   removeIcon,
   loading,
   multiple,
+  prefixCls,
 }: {
   suffixIcon?: React.ReactNode;
   clearIcon?: React.ReactNode;
@@ -22,6 +21,7 @@ export default function getIcons({
   removeIcon?: React.ReactNode;
   loading?: boolean;
   multiple?: boolean;
+  prefixCls: string;
 }) {
   // Clear Icon
   let mergedClearIcon = clearIcon;
@@ -36,11 +36,12 @@ export default function getIcons({
   } else if (loading) {
     mergedSuffixIcon = <LoadingOutlined spin />;
   } else {
+    const iconCls = `${prefixCls}-suffix`;
     mergedSuffixIcon = ({ open, showSearch }: { open: boolean; showSearch: boolean }) => {
       if (open && showSearch) {
-        return <SearchOutlined />;
+        return <SearchOutlined className={iconCls} />;
       }
-      return <DownOutlined />;
+      return <DownOutlined className={iconCls} />;
     };
   }
 

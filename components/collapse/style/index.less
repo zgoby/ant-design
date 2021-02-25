@@ -4,16 +4,12 @@
 @collapse-prefix-cls: ~'@{ant-prefix}-collapse';
 
 .@{collapse-prefix-cls} {
-  .reset-component;
+  .reset-component();
 
   background-color: @collapse-header-bg;
   border: @border-width-base @border-style-base @border-color-base;
   border-bottom: 0;
   border-radius: @collapse-panel-border-radius;
-
-  &-rtl {
-    direction: rtl;
-  }
 
   & > &-item {
     border-bottom: @border-width-base @border-style-base @border-color-base;
@@ -30,41 +26,31 @@
       padding: @collapse-header-padding;
       padding-left: @collapse-header-padding-extra;
       color: @heading-color;
-      line-height: 22px;
+      line-height: @line-height-base;
       cursor: pointer;
-      transition: all 0.3s;
-      .clearfix;
-
-      .@{collapse-prefix-cls}-rtl & {
-        padding: @collapse-header-padding;
-        padding-right: @collapse-header-padding-extra;
-      }
+      transition: all 0.3s, visibility 0s;
+      .clearfix();
 
       .@{collapse-prefix-cls}-arrow {
         .iconfont-mixin();
 
         position: absolute;
-        top: 50%;
-        left: @padding-md;
+        top: ((@font-size-base * @line-height-base - @font-size-sm) / 2);
+        left: @collapse-header-arrow-left;
         display: inline-block;
+        padding: @collapse-header-padding;
+        padding-right: 0;
+        padding-bottom: 0;
+        padding-left: 0;
         font-size: @font-size-sm;
-        transform: translateY(-50%);
 
         & svg {
           transition: transform 0.24s;
-
-          .@{collapse-prefix-cls}-rtl& {
-            transform: rotate(180deg);
-          }
         }
       }
 
       .@{collapse-prefix-cls}-extra {
         float: right;
-
-        .@{collapse-prefix-cls}-rtl& {
-          float: left;
-        }
       }
 
       &:focus {
@@ -72,14 +58,16 @@
       }
     }
 
+    .@{collapse-prefix-cls}-header-collapsible-only {
+      cursor: default;
+      .@{collapse-prefix-cls}-header-text {
+        cursor: pointer;
+      }
+    }
+
     &.@{collapse-prefix-cls}-no-arrow {
       > .@{collapse-prefix-cls}-header {
         padding-left: 12px;
-
-        .@{collapse-prefix-cls}-rtl& {
-          padding-right: 12px;
-          padding-left: 0;
-        }
       }
     }
   }
@@ -99,12 +87,7 @@
     }
   }
 
-  &-anim-active {
-    transition: height 0.2s @ease-out;
-  }
-
   &-content {
-    overflow: hidden;
     color: @text-color;
     background-color: @collapse-content-bg;
     border-top: @border-width-base @border-style-base @border-color-base;
@@ -113,7 +96,7 @@
       padding: @collapse-content-padding;
     }
 
-    &-inactive {
+    &-hidden {
       display: none;
     }
   }
@@ -147,6 +130,22 @@
     padding-top: 4px;
   }
 
+  &-ghost {
+    background-color: transparent;
+    border: 0;
+    > .@{collapse-prefix-cls}-item {
+      border-bottom: 0;
+      > .@{collapse-prefix-cls}-content {
+        background-color: transparent;
+        border-top: 0;
+        > .@{collapse-prefix-cls}-content-box {
+          padding-top: 12px;
+          padding-bottom: 12px;
+        }
+      }
+    }
+  }
+
   & &-item-disabled > &-header {
     &,
     & > .arrow {
@@ -155,3 +154,5 @@
     }
   }
 }
+
+@import './rtl';

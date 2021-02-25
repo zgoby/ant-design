@@ -2,8 +2,9 @@ import Pagination from 'rc-pagination/lib/locale/it_IT';
 import DatePicker from '../date-picker/locale/it_IT';
 import TimePicker from '../time-picker/locale/it_IT';
 import Calendar from '../calendar/locale/it_IT';
+import { Locale } from '../locale-provider';
 
-export default {
+const localeValues: Locale = {
   locale: 'it',
   Pagination,
   DatePicker,
@@ -19,6 +20,9 @@ export default {
     selectAll: 'Seleziona pagina corrente',
     selectInvert: 'Inverti selezione nella pagina corrente',
     sortTitle: 'Ordina',
+    triggerDesc: 'Clicca per ordinare in modo discendente',
+    triggerAsc: '﻿Clicca per ordinare in modo ascendente',
+    cancelSort: 'Clicca per eliminare i filtri',
   },
   Modal: {
     okText: 'OK',
@@ -54,3 +58,5 @@ export default {
     expand: 'espandi',
   },
 };
+
+export default localeValues;

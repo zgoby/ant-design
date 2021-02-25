@@ -11,6 +11,8 @@ title:
 
 有部分定制的样式代码，由于输入标签长度不确定，需要根据具体情况自行调整。
 
+> 🛎️ 想要 3 分钟实现？ 试试 ProFrom 的[查询表单](https://procomponents.ant.design/components/form#%E6%9F%A5%E8%AF%A2%E7%AD%9B%E9%80%89)！
+
 ## en-US
 
 Three columns layout is often used for advanced searching of data table.
@@ -50,7 +52,7 @@ const AdvancedSearchForm = () => {
     return children;
   };
 
-  const onFinish = values => {
+  const onFinish = (values: any) => {
     console.log('Received values of form: ', values);
   };
 
@@ -68,7 +70,7 @@ const AdvancedSearchForm = () => {
             Search
           </Button>
           <Button
-            style={{ marginLeft: 8 }}
+            style={{ margin: '0 8px' }}
             onClick={() => {
               form.resetFields();
             }}
@@ -76,7 +78,7 @@ const AdvancedSearchForm = () => {
             Clear
           </Button>
           <a
-            style={{ marginLeft: 8, fontSize: 12 }}
+            style={{ fontSize: 12 }}
             onClick={() => {
               setExpand(!expand);
             }}
@@ -99,6 +101,7 @@ ReactDOM.render(
 ```
 
 ```css
+[data-theme='compact'] .ant-advanced-search-form,
 .ant-advanced-search-form {
   padding: 24px;
   background: #fbfbfb;
@@ -106,10 +109,12 @@ ReactDOM.render(
   border-radius: 2px;
 }
 
+[data-theme='compact'] .ant-advanced-search-form .ant-form-item,
 .ant-advanced-search-form .ant-form-item {
   display: flex;
 }
 
+[data-theme='compact'] .ant-advanced-search-form .ant-form-item-control-wrapper,
 .ant-advanced-search-form .ant-form-item-control-wrapper {
   flex: 1;
 }

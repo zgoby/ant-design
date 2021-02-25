@@ -9,9 +9,13 @@ title:
 
 通过 `Form.useForm` 对表单数据域进行交互。
 
+> 注意 `useForm` 是 [React Hooks](https://reactjs.org/docs/hooks-intro.html) 的实现，只能用于函数组件，class 组件请查看下面的例子。
+
 ## en-US
 
 Call form method with `Form.useForm`.
+
+> Note that `useForm` is a [React Hooks](https://reactjs.org/docs/hooks-intro.html) that only works in functional component.
 
 ```tsx
 import { Form, Input, Button, Select } from 'antd';
@@ -29,13 +33,20 @@ const tailLayout = {
 const Demo = () => {
   const [form] = Form.useForm();
 
-  const onGenderChange = value => {
-    form.setFieldsValue({
-      note: `Hi, ${value === 'male' ? 'man' : 'lady'}!`,
-    });
+  const onGenderChange = (value: string) => {
+    switch (value) {
+      case 'male':
+        form.setFieldsValue({ note: 'Hi, man!' });
+        return;
+      case 'female':
+        form.setFieldsValue({ note: 'Hi, lady!' });
+        return;
+      case 'other':
+        form.setFieldsValue({ note: 'Hi there!' });
+    }
   };
 
-  const onFinish = values => {
+  const onFinish = (values: any) => {
     console.log(values);
   };
 
@@ -70,13 +81,13 @@ const Demo = () => {
         noStyle
         shouldUpdate={(prevValues, currentValues) => prevValues.gender !== currentValues.gender}
       >
-        {({ getFieldValue }) => {
-          return getFieldValue('gender') === 'other' ? (
+        {({ getFieldValue }) =>
+          getFieldValue('gender') === 'other' ? (
             <Form.Item name="customizeGender" label="Customize Gender" rules={[{ required: true }]}>
               <Input />
             </Form.Item>
-          ) : null;
-        }}
+          ) : null
+        }
       </Form.Item>
       <Form.Item {...tailLayout}>
         <Button type="primary" htmlType="submit">

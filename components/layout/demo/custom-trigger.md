@@ -42,17 +42,14 @@ class SiderDemo extends React.Component {
         <Sider trigger={null} collapsible collapsed={this.state.collapsed}>
           <div className="logo" />
           <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
-            <Menu.Item key="1">
-              <UserOutlined />
-              <span>nav 1</span>
+            <Menu.Item key="1" icon={<UserOutlined />}>
+              nav 1
             </Menu.Item>
-            <Menu.Item key="2">
-              <VideoCameraOutlined />
-              <span>nav 2</span>
+            <Menu.Item key="2" icon={<VideoCameraOutlined />}>
+              nav 2
             </Menu.Item>
-            <Menu.Item key="3">
-              <UploadOutlined />
-              <span>nav 3</span>
+            <Menu.Item key="3" icon={<UploadOutlined />}>
+              nav 3
             </Menu.Item>
           </Menu>
         </Sider>
@@ -84,9 +81,9 @@ ReactDOM.render(<SiderDemo />, mountNode);
 
 ```css
 #components-layout-demo-custom-trigger .trigger {
+  padding: 0 24px;
   font-size: 18px;
   line-height: 64px;
-  padding: 0 24px;
   cursor: pointer;
   transition: color 0.3s;
 }
@@ -97,8 +94,8 @@ ReactDOM.render(<SiderDemo />, mountNode);
 
 #components-layout-demo-custom-trigger .logo {
   height: 32px;
-  background: rgba(255, 255, 255, 0.2);
   margin: 16px;
+  background: rgba(255, 255, 255, 0.3);
 }
 
 .site-layout .site-layout-background {

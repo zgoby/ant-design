@@ -1,8 +1,8 @@
 import * as React from 'react';
 import classNames from 'classnames';
+import { composeRef } from 'rc-util/lib/ref';
 import { ConfigConsumer, ConfigConsumerProps } from '../config-provider';
-import warning from '../_util/warning';
-import { composeRef } from '../_util/ref';
+import devWarning from '../_util/devWarning';
 
 export interface TypographyProps {
   id?: string;
@@ -19,7 +19,7 @@ interface InternalTypographyProps extends TypographyProps {
   setContentRef?: (node: HTMLElement) => void;
 }
 
-const Typography: React.RefForwardingComponent<{}, InternalTypographyProps> = (
+const Typography: React.ForwardRefRenderFunction<{}, InternalTypographyProps> = (
   {
     prefixCls: customizePrefixCls,
     component = 'article',
@@ -34,7 +34,7 @@ const Typography: React.RefForwardingComponent<{}, InternalTypographyProps> = (
   let mergedRef = ref;
 
   if (setContentRef) {
-    warning(false, 'Typography', '`setContentRef` is deprecated. Please use `ref` instead.');
+    devWarning(false, 'Typography', '`setContentRef` is deprecated. Please use `ref` instead.');
     mergedRef = composeRef(ref, setContentRef);
   }
 
@@ -43,9 +43,13 @@ const Typography: React.RefForwardingComponent<{}, InternalTypographyProps> = (
       {({ getPrefixCls, direction }: ConfigConsumerProps) => {
         const Component = component as any;
         const prefixCls = getPrefixCls('typography', customizePrefixCls);
-        const componentClassName = classNames(prefixCls, className, {
-          [`${prefixCls}-rtl`]: direction === 'rtl',
-        });
+        const componentClassName = classNames(
+          prefixCls,
+          {
+            [`${prefixCls}-rtl`]: direction === 'rtl',
+          },
+          className,
+        );
         return (
           <Component
             className={componentClassName}
@@ -61,22 +65,9 @@ const Typography: React.RefForwardingComponent<{}, InternalTypographyProps> = (
   );
 };
 
-let RefTypography;
+const RefTypography = React.forwardRef(Typography);
 
-if (React.forwardRef) {
-  RefTypography = React.forwardRef(Typography);
-  RefTypography.displayName = 'Typography';
-} else {
-  class TypographyWrapper extends React.Component<TypographyProps, {}> {
-    state = {};
-
-    render() {
-      return <Typography {...this.props} />;
-    }
-  }
-
-  RefTypography = TypographyWrapper;
-}
+RefTypography.displayName = 'Typography';
 
 // es default export should use const instead of let
 const ExportTypography = (RefTypography as unknown) as React.FC<TypographyProps>;

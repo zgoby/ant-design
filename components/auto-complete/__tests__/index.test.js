@@ -4,7 +4,7 @@ import AutoComplete from '..';
 import mountTest from '../../../tests/shared/mountTest';
 import rtlTest from '../../../tests/shared/rtlTest';
 
-describe('AutoComplete with Custom Input Element Render', () => {
+describe('AutoComplete', () => {
   mountTest(AutoComplete);
   rtlTest(AutoComplete);
 
@@ -51,5 +51,31 @@ describe('AutoComplete with Custom Input Element Render', () => {
     }).toThrow();
     // eslint-disable-next-line no-console
     console.error.mockRestore();
+  });
+
+  it('legacy dataSource should accept react element option', () => {
+    const wrapper = mount(<AutoComplete open dataSource={[<span key="key">ReactNode</span>]} />);
+    expect(wrapper).toMatchRenderedSnapshot();
+  });
+
+  it('legacy AutoComplete.Option should be compatiable', () => {
+    const wrapper = mount(
+      <AutoComplete>
+        <AutoComplete.Option value="111">111</AutoComplete.Option>
+        <AutoComplete.Option value="222">222</AutoComplete.Option>
+      </AutoComplete>,
+    );
+    expect(wrapper.find('input').length).toBe(1);
+    wrapper.find('input').simulate('change', { target: { value: '1' } });
+    expect(wrapper.find('.ant-select-item-option').length).toBe(2);
+  });
+
+  it('should not warning when getInputElement is null', () => {
+    jest.spyOn(console, 'warn').mockImplementation(() => undefined);
+    mount(<AutoComplete placeholder="input here" allowClear />);
+    // eslint-disable-next-line no-console
+    expect(console.warn).not.toBeCalled();
+    // eslint-disable-next-line no-console
+    console.warn.mockRestore();
   });
 });

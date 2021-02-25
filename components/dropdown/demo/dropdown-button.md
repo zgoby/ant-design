@@ -14,7 +14,7 @@ title:
 A button is on the left, and a related functional menu is on the right. You can set the icon property to modify the icon of right.
 
 ```jsx
-import { Menu, Dropdown, Button, message, Tooltip } from 'antd';
+import { Menu, Dropdown, Button, message, Space, Tooltip } from 'antd';
 import { DownOutlined, UserOutlined } from '@ant-design/icons';
 
 function handleButtonClick(e) {
@@ -29,27 +29,24 @@ function handleMenuClick(e) {
 
 const menu = (
   <Menu onClick={handleMenuClick}>
-    <Menu.Item key="1">
-      <UserOutlined />
+    <Menu.Item key="1" icon={<UserOutlined />}>
       1st menu item
     </Menu.Item>
-    <Menu.Item key="2">
-      <UserOutlined />
+    <Menu.Item key="2" icon={<UserOutlined />}>
       2nd menu item
     </Menu.Item>
-    <Menu.Item key="3">
-      <UserOutlined />
-      3rd item
+    <Menu.Item key="3" icon={<UserOutlined />}>
+      3rd menu item
     </Menu.Item>
   </Menu>
 );
 
 ReactDOM.render(
-  <div id="components-dropdown-demo-dropdown-button">
+  <Space wrap>
     <Dropdown.Button onClick={handleButtonClick} overlay={menu}>
       Dropdown
     </Dropdown.Button>
-    <Dropdown.Button overlay={menu} icon={<UserOutlined />}>
+    <Dropdown.Button overlay={menu} placement="bottomCenter" icon={<UserOutlined />}>
       Dropdown
     </Dropdown.Button>
     <Dropdown.Button onClick={handleButtonClick} overlay={menu} disabled>
@@ -61,7 +58,7 @@ ReactDOM.render(
         <Tooltip title="tooltip" key="leftButton">
           {leftButton}
         </Tooltip>,
-        rightButton,
+        React.cloneElement(rightButton, { loading: true }),
       ]}
     >
       With Tooltip
@@ -71,13 +68,7 @@ ReactDOM.render(
         Button <DownOutlined />
       </Button>
     </Dropdown>
-  </div>,
+  </Space>,
   mountNode,
 );
-```
-
-```css
-#components-dropdown-demo-dropdown-button .ant-dropdown-button {
-  margin: 0 8px 8px 0;
-}
 ```

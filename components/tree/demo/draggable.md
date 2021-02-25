@@ -60,20 +60,20 @@ class Demo extends React.Component {
 
   onDrop = info => {
     console.log(info);
-    const dropKey = info.node.props.eventKey;
-    const dragKey = info.dragNode.props.eventKey;
-    const dropPos = info.node.props.pos.split('-');
+    const dropKey = info.node.key;
+    const dragKey = info.dragNode.key;
+    const dropPos = info.node.pos.split('-');
     const dropPosition = info.dropPosition - Number(dropPos[dropPos.length - 1]);
 
     const loop = (data, key, callback) => {
-      data.forEach((item, index, arr) => {
-        if (item.key === key) {
-          return callback(item, index, arr);
+      for (let i = 0; i < data.length; i++) {
+        if (data[i].key === key) {
+          return callback(data[i], i, data);
         }
-        if (item.children) {
-          return loop(item.children, key, callback);
+        if (data[i].children) {
+          loop(data[i].children, key, callback);
         }
-      });
+      }
     };
     const data = [...this.state.gData];
 
@@ -88,8 +88,8 @@ class Demo extends React.Component {
       // Drop on the content
       loop(data, dropKey, item => {
         item.children = item.children || [];
-        // where to insert 示例添加到尾部，可以是随意位置
-        item.children.push(dragObj);
+        // where to insert 示例添加到头部，可以是随意位置
+        item.children.unshift(dragObj);
       });
     } else if (
       (info.node.props.children || []).length > 0 && // Has children
@@ -100,6 +100,8 @@ class Demo extends React.Component {
         item.children = item.children || [];
         // where to insert 示例添加到头部，可以是随意位置
         item.children.unshift(dragObj);
+        // in previous version, we use item.children.push(dragObj) to insert the
+        // item to the tail of the children
       });
     } else {
       let ar;

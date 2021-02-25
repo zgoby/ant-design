@@ -2,8 +2,9 @@ import Pagination from 'rc-pagination/lib/locale/uk_UA';
 import DatePicker from '../date-picker/locale/uk_UA';
 import TimePicker from '../time-picker/locale/uk_UA';
 import Calendar from '../calendar/locale/uk_UA';
+import { Locale } from '../locale-provider';
 
-export default {
+const localeValues: Locale = {
   locale: 'uk',
   Pagination,
   DatePicker,
@@ -27,8 +28,8 @@ export default {
   },
   Transfer: {
     searchPlaceholder: 'Введіть текст для пошуку',
-    itemUnit: 'item',
-    itemsUnit: 'items',
+    itemUnit: 'елем.',
+    itemsUnit: 'елем.',
   },
   Upload: {
     uploading: 'Завантаження ...',
@@ -41,3 +42,5 @@ export default {
     description: 'Даних немає',
   },
 };
+
+export default localeValues;

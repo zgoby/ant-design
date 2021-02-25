@@ -1,9 +1,14 @@
-import Pagination from 'rc-pagination/lib/locale/ku_IQ';
-import DatePicker from '../date-picker/locale/ku_IQ';
-import TimePicker from '../time-picker/locale/ku_IQ';
-import Calendar from '../calendar/locale/ku_IQ';
+import Pagination from 'rc-pagination/lib/locale/kmr_IQ';
+import DatePicker from '../date-picker/locale/kmr_IQ';
+import TimePicker from '../time-picker/locale/kmr_IQ';
+import Calendar from '../calendar/locale/kmr_IQ';
+import { Locale } from '../locale-provider';
 
-export default {
+// please use antd/lib/locale/kmr_IQ instead
+// keep this file for compatibility
+// https://github.com/ant-design/ant-design/issues/25778
+
+const localeValues: Locale = {
   locale: 'ku-iq',
   Pagination,
   DatePicker,
@@ -41,3 +46,5 @@ export default {
     description: 'Agahî tune',
   },
 };
+
+export default localeValues;

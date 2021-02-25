@@ -2,28 +2,59 @@ import React from 'react';
 import { render, mount } from 'enzyme';
 import Popover from '..';
 import mountTest from '../../../tests/shared/mountTest';
-import { sleep } from '../../../tests/utils';
 import ConfigProvider from '../../config-provider';
 
 describe('Popover', () => {
   mountTest(Popover);
 
-  it('should show overlay when trigger is clicked', async () => {
+  it('should show overlay when trigger is clicked', () => {
+    const ref = React.createRef();
+
     const popover = mount(
-      <Popover content="console.log('hello world')" title="code" trigger="click">
+      <Popover ref={ref} content="console.log('hello world')" title="code" trigger="click">
         <span>show me your code</span>
       </Popover>,
     );
 
-    expect(popover.instance().getPopupDomNode()).toBe(null);
+    expect(ref.current.getPopupDomNode()).toBe(null);
 
     popover.find('span').simulate('click');
-    await sleep(100);
+    expect(popover.find('Trigger PopupInner').props().visible).toBeTruthy();
+  });
 
-    const popup = popover.instance().getPopupDomNode();
+  it('shows content for render functions', () => {
+    const renderTitle = () => 'some-title';
+    const renderContent = () => 'some-content';
+    const ref = React.createRef();
+
+    const popover = mount(
+      <Popover ref={ref} content={renderContent} title={renderTitle} trigger="click">
+        <span>show me your code</span>
+      </Popover>,
+    );
+
+    popover.find('span').simulate('click');
+
+    const popup = ref.current.getPopupDomNode();
     expect(popup).not.toBe(null);
-    expect(popup.className).toContain('ant-popover-placement-top');
+    expect(popup.innerHTML).toContain('some-title');
+    expect(popup.innerHTML).toContain('some-content');
     expect(popup.innerHTML).toMatchSnapshot();
+  });
+
+  it('handles empty title/content props safely', () => {
+    const ref = React.createRef();
+
+    const popover = mount(
+      <Popover trigger="click" ref={ref}>
+        <span>show me your code</span>
+      </Popover>,
+    );
+
+    popover.find('span').simulate('click');
+
+    const popup = ref.current.getPopupDomNode();
+    expect(popup).not.toBe(null);
     expect(popup.innerHTML).toMatchSnapshot();
   });
 

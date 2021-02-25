@@ -3,11 +3,9 @@
 @import '../../input/style/mixin';
 
 @cascader-prefix-cls: ~'@{ant-prefix}-cascader';
-@picker-rtl-cls: ~'@{cascader-prefix-cls}-picker-rtl';
-@menu-rtl-cls: ~'@{cascader-prefix-cls}-menu-rtl';
 
 .@{cascader-prefix-cls} {
-  .reset-component;
+  .reset-component();
 
   &-input.@{ant-prefix}-input {
     // Keep it static for https://github.com/ant-design/ant-design/issues/16738
@@ -19,12 +17,6 @@
     // because input.less will compile after cascader.less
     background-color: transparent !important;
     cursor: pointer;
-
-    .@{picker-rtl-cls} & {
-      padding-right: @input-padding-horizontal-base;
-      padding-left: 24px;
-      text-align: right;
-    }
   }
 
   &-picker-show-search &-input.@{ant-prefix}-input {
@@ -32,7 +24,7 @@
   }
 
   &-picker {
-    .reset-component;
+    .reset-component();
 
     position: relative;
     display: inline-block;
@@ -56,7 +48,12 @@
     }
 
     &:focus .@{cascader-prefix-cls}-input {
-      .active;
+      .active();
+    }
+
+    &-borderless .@{cascader-prefix-cls}-input {
+      border-color: transparent !important;
+      box-shadow: none !important;
     }
 
     &-show-search&-focused {
@@ -75,11 +72,6 @@
       line-height: 20px;
       white-space: nowrap;
       text-overflow: ellipsis;
-
-      .@{picker-rtl-cls} & {
-        padding: 0 @control-padding-horizontal 0 20px;
-        text-align: right;
-      }
     }
 
     &-clear {
@@ -100,11 +92,6 @@
       &:hover {
         color: @text-color-secondary;
       }
-
-      .@{picker-rtl-cls} & {
-        right: auto;
-        left: @control-padding-horizontal;
-      }
     }
 
     &:hover &-clear {
@@ -123,31 +110,19 @@
       color: @disabled-color;
       font-size: 12px;
       line-height: 12px;
-      transition: transform 0.2s;
-      &&-expand {
-        transform: rotate(180deg);
-      }
-
-      .@{picker-rtl-cls} & {
-        right: auto;
-        left: @control-padding-horizontal;
-      }
     }
   }
 
   // https://github.com/ant-design/ant-design/pull/12407#issuecomment-424657810
   &-picker-label:hover + &-input {
-    .hover;
+    &:not(.@{cascader-prefix-cls}-picker-disabled &) {
+      .hover();
+    }
   }
 
   &-picker-small &-picker-clear,
   &-picker-small &-picker-arrow {
     right: @control-padding-horizontal-sm;
-
-    .@{picker-rtl-cls} & {
-      right: auto;
-      left: @control-padding-horizontal;
-    }
   }
 
   &-menus {
@@ -210,22 +185,13 @@
     &:only-child {
       border-radius: @border-radius-base;
     }
-    &-rtl {
-      direction: rtl;
-      border-right: none;
-      border-left: @border-width-base @border-style-base @border-color-split;
-      &:last-child {
-        margin-right: 0;
-        margin-left: -1px;
-        border-left-color: transparent;
-        border-radius: 0 0 4px 4px;
-      }
-    }
   }
   &-menu-item {
     padding: @cascader-dropdown-vertical-padding @control-padding-horizontal;
+    overflow: hidden;
     line-height: @cascader-dropdown-line-height;
     white-space: nowrap;
+    text-overflow: ellipsis;
     cursor: pointer;
     transition: all 0.3s;
     &:hover {
@@ -238,6 +204,11 @@
         background: transparent;
       }
     }
+    .@{cascader-prefix-cls}-menu-empty & {
+      color: @disabled-color;
+      cursor: default;
+      pointer-events: none;
+    }
     &-active:not(&-disabled) {
       &,
       &:hover {
@@ -248,24 +219,17 @@
     &-expand {
       position: relative;
       padding-right: 24px;
-
-      .@{menu-rtl-cls} & {
-        padding-right: @control-padding-horizontal;
-        padding-left: 24px;
-      }
     }
 
     &-expand &-expand-icon,
     &-loading-icon {
-      .iconfont-size-under-12px(10px);
-
       position: absolute;
       right: @control-padding-horizontal;
       color: @text-color-secondary;
+      font-size: 10px;
 
-      .@{menu-rtl-cls} & {
-        right: auto;
-        left: @control-padding-horizontal;
+      .@{cascader-prefix-cls}-menu-item-disabled& {
+        color: @disabled-color;
       }
     }
 
@@ -274,3 +238,5 @@
     }
   }
 }
+
+@import './rtl';

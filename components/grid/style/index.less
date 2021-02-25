@@ -12,8 +12,9 @@
     display: flex;
   }
 
-  &-rtl {
-    direction: rtl;
+  // No wrap of flex
+  &-no-wrap {
+    flex-wrap: nowrap;
   }
 }
 
@@ -59,14 +60,9 @@
 
 .@{ant-prefix}-col {
   position: relative;
-  flex: 0 1 auto;
   max-width: 100%;
   // Prevent columns from collapsing when empty
   min-height: 1px;
-
-  &&-rtl {
-    float: right;
-  }
 }
 
 .make-grid();
@@ -118,3 +114,5 @@
 @media (min-width: @screen-xxl-min) {
   .make-grid(-xxl);
 }
+
+@import './rtl';

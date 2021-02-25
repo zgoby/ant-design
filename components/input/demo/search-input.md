@@ -14,29 +14,42 @@ title:
 Example of creating a search box by grouping a standard input with a search button.
 
 ```jsx
-import { Input } from 'antd';
+import { Input, Space } from 'antd';
+import { AudioOutlined } from '@ant-design/icons';
 
 const { Search } = Input;
 
+const suffix = (
+  <AudioOutlined
+    style={{
+      fontSize: 16,
+      color: '#1890ff',
+    }}
+  />
+);
+
+const onSearch = value => console.log(value);
+
 ReactDOM.render(
-  <div>
+  <Space direction="vertical">
+    <Search placeholder="input search text" onSearch={onSearch} style={{ width: 200 }} />
+    <Search placeholder="input search text" allowClear onSearch={onSearch} style={{ width: 200 }} />
+    <Search placeholder="input search text" onSearch={onSearch} enterButton />
     <Search
       placeholder="input search text"
-      onSearch={value => console.log(value)}
-      style={{ width: 200 }}
+      allowClear
+      enterButton="Search"
+      size="large"
+      onSearch={onSearch}
     />
-    <br />
-    <br />
-    <Search placeholder="input search text" onSearch={value => console.log(value)} enterButton />
-    <br />
-    <br />
     <Search
       placeholder="input search text"
       enterButton="Search"
       size="large"
-      onSearch={value => console.log(value)}
+      suffix={suffix}
+      onSearch={onSearch}
     />
-  </div>,
+  </Space>,
   mountNode,
 );
 ```

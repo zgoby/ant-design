@@ -17,11 +17,13 @@ import {
 } from '../..';
 import LocaleProvider from '..';
 import arEG from '../ar_EG';
+import azAZ from '../az_AZ';
 import bgBG from '../bg_BG';
+import byBY from '../by_BY';
 import caES from '../ca_ES';
 import csCZ from '../cs_CZ';
-import daDK from '../da_DK';
 import deDE from '../de_DE';
+import daDK from '../da_DK';
 import elGR from '../el_GR';
 import enGB from '../en_GB';
 import enUS from '../en_US';
@@ -31,22 +33,29 @@ import faIR from '../fa_IR';
 import fiFI from '../fi_FI';
 import frBE from '../fr_BE';
 import frFR from '../fr_FR';
+import gaIE from '../ga_IE';
+import glES from '../gl_ES';
 import heIL from '../he_IL';
 import hiIN from '../hi_IN';
 import hrHR from '../hr_HR';
 import huHU from '../hu_HU';
 import hyAM from '../hy_AM';
+import idID from '../id_ID';
 import isIS from '../is_IS';
 import itIT from '../it_IT';
 import jaJP from '../ja_JP';
+import kkKZ from '../kk_KZ';
 import knIN from '../kn_IN';
 import koKR from '../ko_KR';
+import kmrIQ from '../kmr_IQ';
 import kuIQ from '../ku_IQ';
+import lvLV from '../lv_LV';
+import ltLT from '../lt_LT';
 import mkMK from '../mk_MK';
 import mnMN from '../mn_MN';
 import msMY from '../ms_MY';
 import nbNO from '../nb_NO';
-import neNP from '../ne-NP';
+import neNP from '../ne_NP';
 import nlBE from '../nl_BE';
 import nlNL from '../nl_NL';
 import plPL from '../pl_PL';
@@ -63,14 +72,15 @@ import thTH from '../th_TH';
 import trTR from '../tr_TR';
 import ukUA from '../uk_UA';
 import viVN from '../vi_VN';
-import idID from '../id_ID';
-import lvLV from '../lv_LV';
 import zhCN from '../zh_CN';
+import zhHK from '../zh_HK';
 import zhTW from '../zh_TW';
 
 const locales = [
+  azAZ,
   arEG,
   bgBG,
+  byBY,
   caES,
   csCZ,
   daDK,
@@ -84,6 +94,8 @@ const locales = [
   fiFI,
   frBE,
   frFR,
+  gaIE,
+  glES,
   heIL,
   hiIN,
   hrHR,
@@ -92,9 +104,12 @@ const locales = [
   isIS,
   itIT,
   jaJP,
+  kkKZ,
   knIN,
   koKR,
+  kmrIQ,
   kuIQ,
+  ltLT,
   mkMK,
   msMY,
   mnMN,
@@ -119,6 +134,7 @@ const locales = [
   idID,
   lvLV,
   zhCN,
+  zhHK,
   zhTW,
 ];
 
@@ -172,7 +188,7 @@ describe('Locale Provider', () => {
   ));
 
   beforeAll(() => {
-    MockDate.set(moment('2017-09-18T03:30:07.795'));
+    MockDate.set(moment('2017-09-18T03:30:07.795').valueOf());
   });
 
   afterAll(() => {
@@ -193,9 +209,12 @@ describe('Locale Provider', () => {
   it('should change locale of Modal.xxx', () => {
     class ModalDemo extends React.Component {
       componentDidMount() {
+        jest.useFakeTimers();
         Modal.confirm({
           title: 'Hello World!',
         });
+        jest.runAllTimers();
+        jest.useRealTimers();
       }
 
       render() {
@@ -215,7 +234,7 @@ describe('Locale Provider', () => {
         '.ant-btn:not(.ant-btn-primary) span',
       )[0].innerHTML;
       let okButtonText = currentConfirmNode.querySelectorAll('.ant-btn-primary span')[0].innerHTML;
-      if (locale.locale === 'zh-cn') {
+      if (locale.locale.indexOf('zh-') === 0) {
         cancelButtonText = cancelButtonText.replace(' ', '');
         okButtonText = okButtonText.replace(' ', '');
       }
